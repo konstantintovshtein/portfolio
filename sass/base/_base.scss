@@ -11,6 +11,7 @@ html {
   // This defines what 1rem is
   font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
   scroll-behavior: smooth;
+  background: var(--bg);
 
   @include respond(tab-land) {
     // width < 1200?
@@ -30,12 +31,23 @@ html {
 body {
   box-sizing: border-box;
   position: relative;
-  line-height: 1.5;
-  font-family: sans-serif;
+  line-height: 1.6;
   overflow-x: hidden;
   overflow-y: scroll;
-  font-family: 'Source Sans Pro', sans-serif;
-  
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+.heading-primary,
+.heading-sec__main,
+.heading-sm {
+  font-family: var(--font-heading);
 }
 
 a {
@@ -47,18 +59,43 @@ li {
   list-style: none;
 }
 
-input:focus,
-button:focus,
-a:focus,
-textarea:focus {
+::selection {
+  background: var(--accent-btn);
+  color: #fff;
+}
+
+// Keep mouse clicks clean but show a clear ring for keyboard users
+:focus {
   outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 button {
   border: none;
   cursor: pointer;
+  background: none;
+  color: inherit;
 }
 
 textarea {
   resize: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

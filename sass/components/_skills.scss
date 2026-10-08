@@ -6,9 +6,10 @@
     margin-bottom: 1.5rem;
     margin-right: 1.5rem;
     font-size: 1.6rem;
-    background: rgba(#999, 0.2);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: $commonBorderRadius;
     font-weight: 600;
-    color: #777;
+    color: var(--text-muted);
   }
 }

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark" />
     <title>Medusa Events — Konstantin Tovshtein</title>
     <meta name="description" content="Case study: Co-Founder at Medusa Events" />
 
@@ -12,23 +14,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <header class="header">
       <div class="header__content">
-        <div class="header__logo-container">
+        <a href="./index.html" class="header__logo-container">
           <div class="header__logo-img-cont">
             <img
               src="./assets/png/john-doe.png"
-              alt="Konstantin Tovshtein"
+              alt=""
               class="header__logo-img"
             />
           </div>
           <span class="header__logo-sub">Konstantin Tovshtein</span>
-        </div>
+        </a>
         <div class="header__main">
           <ul class="header__links">
             <li class="header__link-wrapper">
@@ -46,21 +48,27 @@
               <a href="./index.html#contact" class="header__link"> Contact </a>
             </li>
           </ul>
-          <div class="header__main-ham-menu-cont">
+          <button
+            type="button"
+            class="header__main-ham-menu-cont"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
             <img
               src="./assets/svg/ham-menu.svg"
-              alt="hamburger menu"
+              alt=""
               class="header__main-ham-menu"
             />
             <img
               src="./assets/svg/ham-menu-close.svg"
-              alt="hamburger menu close"
+              alt=""
               class="header__main-ham-menu-close d-none"
             />
-          </div>
+          </button>
         </div>
       </div>
-      <div class="header__sm-menu">
+      <div class="header__sm-menu" id="mobile-menu">
         <div class="header__sm-menu-content">
           <ul class="header__sm-menu-links">
             <li class="header__sm-menu-link">
@@ -163,7 +171,7 @@
           </div>
         </div>
         <div class="main-footer__lower">
-          &copy; Copyright 2024. Konstantin Tovshtein.
+          &copy; Copyright <span class="js-year">2026</span>. Konstantin Tovshtein.
         </div>
       </div>
     </footer>

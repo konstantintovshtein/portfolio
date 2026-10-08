@@ -1,0 +1,19 @@
+// Dark theme tokens. Change colors here, not in components.
+:root {
+  color-scheme: dark;
+
+  --bg: #09090b;
+  --surface: #18181b;
+  --surface-2: #27272a;
+  --border: #3f3f46;
+  --text: #fafafa;
+  --text-muted: #a1a1aa;
+  --accent: #3b82f6;
+  --accent-btn: #2563eb;
+  --accent-hover: #1d4ed8;
+
+  --font-heading: 'Archivo', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+
+  --transition: 200ms ease;
+}

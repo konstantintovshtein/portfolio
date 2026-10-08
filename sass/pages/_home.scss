@@ -1,11 +1,13 @@
 .home-hero {
-  color: #fff;
-  background: linear-gradient(
-      to right,
-      rgba($themeClrPrimary, 0.8),
-      rgba($themeClrPrimary, 0.8)
+  color: var(--text);
+  background: radial-gradient(
+      ellipse at top,
+      rgba(37, 99, 235, 0.22),
+      transparent 60%
     ),
+    linear-gradient(rgba(9, 9, 11, 0.9), rgba(9, 9, 11, 0.9)),
     url(../../assets/svg/common-bg.svg);
+  background-color: var(--bg);
   background-position: center;
 
   height: 100vh;
@@ -22,8 +24,9 @@
   &__socials {
     position: absolute;
     top: 50%;
-    border: 2px solid #eee;
-    border-left: 2px solid #eee;
+    border: 1px solid var(--border);
+    border-left: 0;
+    background: var(--surface);
     transform: translateY(-50%);
     @include respond(tab-port) {
       display: none;
@@ -48,11 +51,11 @@
     width: 100%;
     display: block;
     padding: 1.2rem;
-    border-bottom: 2px solid #eee;
-    transition: background .3s;
+    border-bottom: 1px solid var(--border);
+    transition: background-color var(--transition);
 
     &:hover {
-      background: rgba(#fff,.1);
+      background: var(--surface-2);
     }
 
     &--bd-none {
@@ -91,7 +94,9 @@
 }
 
 .about {
-  background: rgb(250, 250, 250);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   &__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -104,18 +109,20 @@
       font-weight: 700;
       font-size: 2.8rem;
       margin-bottom: 3rem;
+      font-family: var(--font-heading);
       @include respond(phone) {
         font-size: 2.4rem;
       }
     }
     &-details-para {
       font-size: 1.8rem;
-      color: grey;
+      color: var(--text-muted);
       max-width: 60rem;
       line-height: 1.7;
       margin-bottom: 1rem;
       &--hl {
         font-weight: 700;
+        color: var(--text);
         margin: 0 3px;
       }
       &:last-child {
@@ -148,11 +155,19 @@
 
     &-img-cont {
       overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: $commonBorderRadius;
+      background: var(--surface);
     }
     &-img {
       width: 100%;
       display: block;
       object-fit: cover;
+      opacity: 0.9;
+      transition: opacity var(--transition);
+    }
+    &:hover &-img {
+      opacity: 1;
     }
     &-content {
       padding: 2rem 0;
@@ -175,7 +190,7 @@
       }
       &-desc {
         font-size: 1.8rem;
-        color: grey;
+        color: var(--text-muted);
         max-width: 60rem;
         line-height: 1.7;
         margin-bottom: 3rem;
@@ -188,18 +203,16 @@
 }
 
 .contact {
-  background: linear-gradient(
-      to right,
-      rgba($themeClrPrimary, 0.8),
-      rgba($themeClrPrimary, 0.8)
+  background: radial-gradient(
+      ellipse at bottom,
+      rgba(37, 99, 235, 0.18),
+      transparent 60%
     ),
-    url(../../assets/svg/common-bg.svg);
-  background-size: cover;
-  background-position: center;
+    var(--bg);
 
   &__form-container {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: rgba(#fff, 2);
+    border: 1px solid var(--border);
+    background: var(--surface);
     padding: 4rem;
     margin-top: 6rem;
     max-width: 80rem;
@@ -219,7 +232,7 @@
     }
   }
   &__form-label {
-    color: #666;
+    color: var(--text-muted);
     font-size: 1.4rem;
     letter-spacing: 1px;
     font-weight: 700;
@@ -228,39 +241,47 @@
     text-align: left;
   }
   &__form-input {
-    color: #333;
+    color: var(--text);
     padding: 2rem;
     width: 100%;
-    border: 1px solid rgb(235, 235, 235);
+    border: 1px solid var(--border);
     font-size: 1.6rem;
     letter-spacing: 0px;
-    background: rgba(rgb(240, 240, 240), 1);
+    background: var(--surface-2);
     border-radius: $commonBorderRadius;
-    font-weight: 600;
+    font-weight: 500;
+    transition: border-color var(--transition);
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
     /* Code for Modern Browsers */
     &::placeholder {
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }
 
     /* Code for WebKit, Blink, Edge */
     &::-webkit-input-placeholder {
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }
 
     /* Code for Internet Explorer 10-11 */
     &:-ms-input-placeholder {
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }
 
     /* Code for Microsoft Edge */
     &::-ms-input-placeholder {
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }
@@ -268,7 +289,7 @@
     /* Code for Mozilla Firefox 4 to 18 */
     &:-moz-placeholder {
       opacity: 1;
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }
@@ -276,7 +297,7 @@
     /* Code for Mozilla Firefox 19+ */
     &::-moz-placeholder {
       opacity: 1;
-      color: #999;
+      color: var(--text-muted);
       font-weight: 600;
       font-size: 1.6rem;
     }

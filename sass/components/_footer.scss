@@ -1,6 +1,7 @@
 .main-footer {
-  background: #000;
-  color: #fff;
+  background: var(--surface);
+  color: var(--text);
+  border-top: 1px solid var(--border);
   &__upper {
     display: flex;
     justify-content: space-between;
@@ -30,7 +31,7 @@
 
   &__short-desc {
     margin-top: 2rem;
-    color: #eee;
+    color: var(--text-muted);
     font-size: 1.5rem;
     line-height: 1.7;
   }
@@ -42,6 +43,12 @@
   &__icon {
     margin-right: 1rem;
     width: 2.5rem;
+    opacity: 0.8;
+    transition: opacity var(--transition);
+
+    &:hover {
+      opacity: 1;
+    }
     &--mr-none {
       margin-right: 0;
     }
@@ -49,8 +56,8 @@
 
   &__lower {
     padding: 4rem 0;
-    border-top: 1px solid #444;
-    color: #eee;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
     font-size: 1.2rem;
     text-align: left;
     text-align: center;

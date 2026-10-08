@@ -1,4 +1,4 @@
-// ---
+// --- Mobile menu
 const hamMenuBtn = document.querySelector('.header__main-ham-menu-cont')
 const smallMenu = document.querySelector('.header__sm-menu')
 const headerHamMenuBtn = document.querySelector('.header__main-ham-menu')
@@ -7,32 +7,30 @@ const headerHamMenuCloseBtn = document.querySelector(
 )
 const headerSmallMenuLinks = document.querySelectorAll('.header__sm-menu-link')
 
+const setMenuOpen = (open) => {
+  smallMenu.classList.toggle('header__sm-menu--active', open)
+  headerHamMenuBtn.classList.toggle('d-none', open)
+  headerHamMenuCloseBtn.classList.toggle('d-none', !open)
+  hamMenuBtn.setAttribute('aria-expanded', String(open))
+  hamMenuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
+}
+
 hamMenuBtn.addEventListener('click', () => {
-  if (smallMenu.classList.contains('header__sm-menu--active')) {
-    smallMenu.classList.remove('header__sm-menu--active')
-  } else {
-    smallMenu.classList.add('header__sm-menu--active')
-  }
-  if (headerHamMenuBtn.classList.contains('d-none')) {
-    headerHamMenuBtn.classList.remove('d-none')
-    headerHamMenuCloseBtn.classList.add('d-none')
-  } else {
-    headerHamMenuBtn.classList.add('d-none')
-    headerHamMenuCloseBtn.classList.remove('d-none')
+  setMenuOpen(!smallMenu.classList.contains('header__sm-menu--active'))
+})
+
+headerSmallMenuLinks.forEach((link) => {
+  link.addEventListener('click', () => setMenuOpen(false))
+})
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && smallMenu.classList.contains('header__sm-menu--active')) {
+    setMenuOpen(false)
+    hamMenuBtn.focus()
   }
 })
 
-for (let i = 0; i < headerSmallMenuLinks.length; i++) {
-  headerSmallMenuLinks[i].addEventListener('click', () => {
-    smallMenu.classList.remove('header__sm-menu--active')
-    headerHamMenuBtn.classList.remove('d-none')
-    headerHamMenuCloseBtn.classList.add('d-none')
-  })
-}
-
-// ---
-const headerLogoConatiner = document.querySelector('.header__logo-container')
-
-headerLogoConatiner.addEventListener('click', () => {
-  location.href = 'index.html'
+// --- Footer year
+document.querySelectorAll('.js-year').forEach((el) => {
+  el.textContent = new Date().getFullYear()
 })

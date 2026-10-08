@@ -1,11 +1,13 @@
 .project-cs-hero {
-  color: #fff;
-  background: linear-gradient(
-      to right,
-      rgba($themeClrPrimary, 0.8),
-      rgba($themeClrPrimary, 0.8)
+  color: var(--text);
+  background: radial-gradient(
+      ellipse at top,
+      rgba(37, 99, 235, 0.22),
+      transparent 60%
     ),
+    linear-gradient(rgba(9, 9, 11, 0.9), rgba(9, 9, 11, 0.9)),
     url(../../assets/svg/common-bg.svg);
+  background-color: var(--bg);
   background-size: cover;
   background-position: center;
   position: relative;
@@ -49,6 +51,7 @@
       font-weight: 700;
       font-size: 2.8rem;
       margin-bottom: 3rem;
+      font-family: var(--font-heading);
       @include respond(phone) {
         font-size: 2.4rem;
       }
@@ -62,6 +65,9 @@
 
   &__showcase-img {
     width: 100%;
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: $commonBorderRadius;
   }
   &__content-main {
     width: 100%;
@@ -74,7 +80,7 @@
     &-para {
       font-size: 1.8rem;
       line-height: 1.7;
-      color: grey;
+      color: var(--text-muted);
       margin-bottom: 2rem;
     }
   }
@@ -90,10 +96,11 @@
       margin-bottom: 1.5rem;
       margin-right: 1.5rem;
       font-size: 1.6rem;
-      background: rgba(#999, 0.2);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: $commonBorderRadius;
       font-weight: 600;
-      color: #777;
+      color: var(--text-muted);
     }
   }
   &__links {
