@@ -125,3 +125,7 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node
 # Claude Code
 CLAUDE.md
+
+# Research notes (not part of the site)
+research_notes/
+reports/
