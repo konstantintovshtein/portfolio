@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#09090b" />
     <meta name="color-scheme" content="dark" />
     <title>Konstantin Tovshtein</title>
-    <meta name="description" content="Portfolio of Konstantin Tovshtein — BBA student at Simon Fraser University specializing in Management Information Systems and Accounting." />
+    <meta name="description" content="Portfolio of Konstantin Tovshtein, a BBA student at Simon Fraser University in Management Information Systems and Accounting, aiming for fintech and information systems." />
 
     <link rel="stylesheet" href="css/style.css" />
 
@@ -34,18 +34,19 @@
         <div class="header__main">
           <ul class="header__links">
             <li class="header__link-wrapper">
-              <a href="./index.html" class="header__link"> Home </a>
+              <a href="./index.html" class="header__link" aria-current="page">Home</a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#about" class="header__link">About </a>
+              <a href="./experience.html" class="header__link">Experience</a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#projects" class="header__link">
-                Experience
-              </a>
+              <a href="./projects.html" class="header__link">Projects</a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#contact" class="header__link"> Contact </a>
+              <a href="./about.html" class="header__link">About</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#contact" class="header__link">Contact</a>
             </li>
           </ul>
           <button
@@ -72,19 +73,19 @@
         <div class="header__sm-menu-content">
           <ul class="header__sm-menu-links">
             <li class="header__sm-menu-link">
-              <a href="./index.html"> Home </a>
+              <a href="./index.html" aria-current="page">Home</a>
             </li>
-
             <li class="header__sm-menu-link">
-              <a href="./index.html#about"> About </a>
+              <a href="./experience.html">Experience</a>
             </li>
-
             <li class="header__sm-menu-link">
-              <a href="./index.html#projects"> Experience </a>
+              <a href="./projects.html">Projects</a>
             </li>
-
             <li class="header__sm-menu-link">
-              <a href="./index.html#contact"> Contact </a>
+              <a href="./about.html">About</a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -92,14 +93,16 @@
     </header>
     <section class="home-hero">
       <div class="home-hero__content">
+        <span class="home-hero__eyebrow">MIS &middot; Accounting &middot; Computer Science</span>
         <h1 class="heading-primary">Hey, I'm Konstantin Tovshtein</h1>
         <div class="home-hero__info">
           <p class="text-primary">
-            A fourth-year BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. I build systems, track numbers, and get things running smoothly.
+            A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. Next stop, a career in fintech.
           </p>
         </div>
         <div class="home-hero__cta">
-          <a href="./index.html#projects" class="btn btn--bg">My Experience</a>
+          <a href="./experience.html" class="btn btn--theme">View Experience</a>
+          <a href="./projects.html" class="btn btn--theme-inv">See Projects</a>
         </div>
       </div>
       <div class="home-hero__socials">
@@ -126,122 +129,95 @@
         <div class="mouse"></div>
       </div>
     </section>
-    <section id="about" class="about sec-pad">
+    <section class="sec-pad" aria-labelledby="glance-title">
       <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-med">
-          <span class="heading-sec__main">About Me</span>
-          <span class="heading-sec__sub">
-            Business and technology, in practice rather than theory.
-          </span>
-        </h2>
-        <div class="about__content">
-          <div class="about__content-main">
-            <h3 class="about__content-title">Get to know me!</h3>
-            <div class="about__content-details">
-              <p class="about__content-details-para">
-                I'm <strong>Konstantin Tovshtein</strong>, a fourth-year BBA student at <strong>Simon Fraser University</strong> concentrating in Management Information Systems and Accounting, with a minor in Computer Science. My academic work is grounded in database structures, enterprise data networks, and corporate finance, and I'm drawn to roles where these areas intersect in real operations.
-              </p>
-              <p class="about__content-details-para">
-                Outside of school, I co-founded an event management company called <strong>Medusa Events</strong>, spent a summer running the full financial operation for a moving business, and completed a contract placement at <strong>Crowe MacKay</strong> in public accounting. I tend to take on work that puts me in charge of building things from scratch, whether that's a bookkeeping system, a revenue distribution framework, or a vendor coordination process. Feel free to <strong>reach out</strong> below.
-              </p>
-            </div>
-            <a href="./index.html#contact" class="btn btn--med btn--theme dynamicBgClr"
-              >Contact</a
-            >
+        <div class="section-head">
+          <div>
+            <h2 class="section-head__title" id="glance-title">At a glance</h2>
+            <p class="section-head__sub">A few numbers from the work so far.</p>
           </div>
-          <div class="about__content-skills">
-            <h3 class="about__content-title">My Skills</h3>
-            <div class="skills">
-              <div class="skills__skill">PostgreSQL</div>
-              <div class="skills__skill">Microsoft Azure</div>
-              <div class="skills__skill">Power BI</div>
-              <div class="skills__skill">Tableau</div>
-              <div class="skills__skill">QuickBooks</div>
-              <div class="skills__skill">Excel</div>
-              <div class="skills__skill">Asana</div>
-              <div class="skills__skill">Jira</div>
-              <div class="skills__skill">PowerPoint</div>
-              <div class="skills__skill">MS Teams</div>
-              <div class="skills__skill">Python</div>
-              <div class="skills__skill">SQL</div>
-            </div>
+          <a href="./about.html" class="text-link">More about me &rarr;</a>
+        </div>
+        <div class="stats">
+          <div class="stats__item">
+            <span class="stats__value">25<span>%</span></span>
+            <span class="stats__label">Lower system costs after my Power BI dashboard at Jetlink Solutions</span>
+          </div>
+          <div class="stats__item">
+            <span class="stats__value">10<span>%</span></span>
+            <span class="stats__label">Above my assigned workload at Crowe MacKay</span>
+          </div>
+          <div class="stats__item">
+            <span class="stats__value">5</span>
+            <span class="stats__label">Roles across fintech, accounting, AI and events</span>
+          </div>
+          <div class="stats__item">
+            <span class="stats__value">2</span>
+            <span class="stats__label">Hackathons, including a full-stack build at Stormhacks 2026</span>
           </div>
         </div>
       </div>
     </section>
-    <section id="projects" class="projects sec-pad">
+    <section class="sec-pad sec-alt" aria-labelledby="featured-title">
       <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-bg">
-          <span class="heading-sec__main">Experience</span>
-          <span class="heading-sec__sub">
-            A few roles where I was responsible for building or running something that mattered.
-          </span>
-        </h2>
-
-        <div class="projects__content">
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/project-mockup-example.jpeg"
-                alt="Medusa Events"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">Co-Founder — Medusa Events</h3>
-              <p class="projects__row-content-desc">
-                Built a live entertainment and event management company from the ground up alongside a four-partner team in Vancouver. Handled vendor negotiations, venue logistics, operational timelines, and the corporate revenue distribution framework that kept all four partners aligned financially.
-              </p>
-              <a
-                href="./project-1.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                >Case Study</a
-              >
-            </div>
+        <div class="section-head">
+          <div>
+            <h2 class="section-head__title" id="featured-title">Featured project</h2>
+            <p class="section-head__sub">The most recent thing I built.</p>
           </div>
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/project-mockup-example.jpeg"
-                alt="Stonegate Moving Solutions"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">Financial Manager — Stonegate Moving Solutions</h3>
-              <p class="projects__row-content-desc">
-                Set up the complete financial infrastructure for a summer moving enterprise, starting from zero. Configured QuickBooks, managed accounts payable and invoice workflows, performed monthly bank reconciliations, and maintained BC regulatory compliance documentation throughout the operation.
-              </p>
-              <a
-                href="./project-2.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                >Case Study</a
-              >
-            </div>
+          <a href="./projects.html" class="text-link">All projects &rarr;</a>
+        </div>
+            <article class="card card--featured">
+              <p class="card__eyebrow">Hackathon &middot; Stormhacks 2026</p>
+              <h3 class="card__title">GPU sharing platform</h3>
+              <p class="card__desc">Built from scratch as a full-stack developer. We shipped a web app and a desktop app, with Solana wallet sign-in and payouts on Devnet.</p>
+              <div class="skills">
+                <div class="skills__skill">Full stack</div>
+                <div class="skills__skill">Web app</div>
+                <div class="skills__skill">Desktop app</div>
+                <div class="skills__skill">Solana</div>
+                <div class="skills__skill">Devnet</div>
+              </div>
+              <div class="card__actions">
+                <a href="./stormhacks-gpu.html" class="btn btn--med btn--theme">Case Study</a>
+              </div>
+            </article>
+      </div>
+    </section>
+    <section class="sec-pad" aria-labelledby="roles-title">
+      <div class="main-container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-head__title" id="roles-title">Selected experience</h2>
+            <p class="section-head__sub">Payments compliance, data and a company I co-founded.</p>
           </div>
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/project-mockup-example.jpeg"
-                alt="Crowe MacKay"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">Accounting Assistant — Crowe MacKay</h3>
-              <p class="projects__row-content-desc">
-                Contracted to support corporate finance operations at a public accounting firm. Reviewed corporate ledgers, performed variance analysis on large financial data sets, and cross-referenced multi-tier ledgers for executive review. Managed complex documentation workflows under tight accuracy requirements.
-              </p>
-              <a
-                href="./project-3.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                >Case Study</a
-              >
-            </div>
-          </div>
+          <a href="./experience.html" class="text-link">Full experience &rarr;</a>
+        </div>
+        <div class="card-grid card-grid--3">
+            <article class="card">
+              <p class="card__eyebrow">One Pay Ltd</p>
+              <h3 class="card__title">Compliance and Engineering Support</h3>
+              <p class="card__desc">Gathered and organized the legal documentation the company needed to pass <strong>PCI DSS</strong> and <strong>Visa certification</strong>.</p>
+              <div class="card__actions">
+                <a href="./one-pay.html" class="text-link">Read the case study &rarr;</a>
+              </div>
+            </article>
+            <article class="card">
+              <p class="card__eyebrow">Jetlink Solutions</p>
+              <h3 class="card__title">Technical Support Specialist and Data Analyst</h3>
+              <p class="card__desc">The dashboard helped management cut system costs by <strong>25%</strong>.</p>
+              <div class="card__actions">
+                <a href="./jetlink.html" class="text-link">Read the case study &rarr;</a>
+              </div>
+            </article>
+            <article class="card">
+              <p class="card__eyebrow">Medusa Events</p>
+              <h3 class="card__title">Co-Founder</h3>
+              <p class="card__desc">Co-founded the company with three equal partners and run it alongside my studies.</p>
+              <div class="card__actions">
+                <a href="./medusa-events.html" class="text-link">Read the case study &rarr;</a>
+              </div>
+            </article>
         </div>
       </div>
     </section>
@@ -330,7 +306,7 @@
           <div class="main-footer__row main-footer__row-2">
             <h4 class="heading heading-sm text-lt">Konstantin Tovshtein</h4>
             <p class="main-footer__short-desc">
-              BBA student at Simon Fraser University. MIS, Accounting, and Computer Science. Based in Vancouver, BC.
+              BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. Based in Vancouver, BC.
             </p>
           </div>
         </div>

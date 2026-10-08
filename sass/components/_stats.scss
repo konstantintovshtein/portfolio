@@ -1,0 +1,38 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+
+  @include respond(tab-port) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: $commonBorderRadius;
+    padding: 3rem 2.5rem;
+    text-align: left;
+  }
+
+  &__value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 4.4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+
+    span {
+      color: var(--accent);
+    }
+  }
+
+  &__label {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+}

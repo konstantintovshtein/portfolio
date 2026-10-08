@@ -89,7 +89,26 @@
   }
   &__cta {
     margin-top: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+
+    .btn {
+      padding: 1.5rem 4.5rem;
+      font-size: 1.7rem;
+    }
+  }
+
+  &__eyebrow {
+    display: block;
     text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
   }
 }
 

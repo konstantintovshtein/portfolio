@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark" />
+    <title>About | Konstantin Tovshtein</title>
+    <meta name="description" content="About Konstantin Tovshtein: education at Simon Fraser University, technical skills and interests." />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <a href="./index.html" class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img
+              src="./assets/png/john-doe.png"
+              alt=""
+              class="header__logo-img"
+            />
+          </div>
+          <span class="header__logo-sub">Konstantin Tovshtein</span>
+        </a>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="./index.html" class="header__link">Home</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./experience.html" class="header__link">Experience</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./projects.html" class="header__link">Projects</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./about.html" class="header__link" aria-current="page">About</a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="./index.html#contact" class="header__link">Contact</a>
+            </li>
+          </ul>
+          <button
+            type="button"
+            class="header__main-ham-menu-cont"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <img
+              src="./assets/svg/ham-menu.svg"
+              alt=""
+              class="header__main-ham-menu"
+            />
+            <img
+              src="./assets/svg/ham-menu-close.svg"
+              alt=""
+              class="header__main-ham-menu-close d-none"
+            />
+          </button>
+        </div>
+      </div>
+      <div class="header__sm-menu" id="mobile-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="./index.html">Home</a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./experience.html">Experience</a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./projects.html">Projects</a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./about.html" aria-current="page">About</a>
+            </li>
+            <li class="header__sm-menu-link">
+              <a href="./index.html#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="page-hero">
+      <div class="main-container">
+        <h1 class="heading-primary">About</h1>
+        <p class="page-hero__sub">Business student, part-time developer, full-time tinkerer.</p>
+      </div>
+    </section>
+    <section class="sec-pad">
+      <div class="main-container about-page__grid">
+        <div>
+          <h2 class="section-head__title">My story</h2>
+          <br />
+          <p class="about-page__para">
+            I'm <strong>Konstantin Tovshtein</strong>, a fourth-year Business Administration student at <strong>Simon Fraser University</strong> in Burnaby. I concentrate in <strong>Management Information Systems</strong> and <strong>Accounting</strong>, with a minor in <strong>Computer Science</strong>.
+          </p>
+          <p class="about-page__para">
+            My work sits between finance and engineering. I review ledgers, build dashboards, write SQL and Python, and I have helped get payment software ready for PCI DSS. I want to build a career in <strong>fintech and information systems</strong>, where both sides matter.
+          </p>
+          <p class="about-page__para">
+            Most of what I know came from doing it. I co-founded an events company with three partners, built a Power BI dashboard that helped cut system costs by 25%, automated lead generation with Python, and built a GPU sharing app with Solana payouts at Stormhacks 2026.
+          </p>
+          <a href="./index.html#contact" class="btn btn--med btn--theme">Get in touch</a>
+        </div>
+        <div>
+          <h2 class="section-head__title">Education</h2>
+          <br />
+          <div class="about-page__edu-item">
+            <p class="about-page__edu-school">Simon Fraser University</p>
+            <p class="about-page__edu-detail">Bachelor of Business Administration, fourth year. Concentrations in Management Information Systems and Accounting. Minor in Computer Science.</p>
+          </div>
+          <div class="about-page__edu-item">
+            <p class="about-page__edu-school">Fraser International College</p>
+            <p class="about-page__edu-detail">Pathway to SFU. Mentored first-year international students as they settled into university life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="sec-pad sec-alt" aria-labelledby="skills-title">
+      <div class="main-container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-head__title" id="skills-title">Skills</h2>
+            <p class="section-head__sub">Tools I use at work, in class and on my own projects.</p>
+          </div>
+        </div>
+        <div class="skill-groups">
+          <div class="skill-group">
+            <h3 class="skill-group__title">Languages and frameworks</h3>
+            <div class="skills">
+              <div class="skills__skill">Python</div>
+              <div class="skills__skill">C</div>
+              <div class="skills__skill">Go</div>
+              <div class="skills__skill">Rust</div>
+              <div class="skills__skill">Next.js</div>
+              <div class="skills__skill">SQL</div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group__title">Data and BI</h3>
+            <div class="skills">
+              <div class="skills__skill">PostgreSQL</div>
+              <div class="skills__skill">MySQL</div>
+              <div class="skills__skill">Power BI</div>
+              <div class="skills__skill">Tableau</div>
+              <div class="skills__skill">Excel</div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group__title">Cloud and workflow</h3>
+            <div class="skills">
+              <div class="skills__skill">Microsoft Azure</div>
+              <div class="skills__skill">GitHub</div>
+              <div class="skills__skill">Linear</div>
+              <div class="skills__skill">Jira</div>
+              <div class="skills__skill">Asana</div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group__title">AI</h3>
+            <div class="skills">
+              <div class="skills__skill">Prompt engineering</div>
+              <div class="skills__skill">Anthropic AI coursework</div>
+              <div class="skills__skill">Gemini</div>
+              <div class="skills__skill">GitHub Copilot</div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group__title">Design</h3>
+            <div class="skills">
+              <div class="skills__skill">Figma</div>
+              <div class="skills__skill">Canva</div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group__title">Accounting</h3>
+            <div class="skills">
+              <div class="skills__skill">QuickBooks</div>
+              <div class="skills__skill">Financial ledgers</div>
+              <div class="skills__skill">PCI DSS</div>
+            </div>
+          </div>
+        </div>
+        <p class="callout">
+          <strong>Currently learning:</strong> agentic harnesses, the tooling that lets AI models plan and act across multi-step tasks. I also understand core data structures and have written custom sorting implementations in C.
+        </p>
+      </div>
+    </section>
+    <section class="sec-pad" aria-labelledby="beyond-title">
+      <div class="main-container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-head__title" id="beyond-title">Beyond work</h2>
+            <p class="section-head__sub">What I do when I'm not at a keyboard.</p>
+          </div>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3 class="card__title">On two wheels and four</h3>
+            <p class="card__desc">I ride a red 2024 Honda CBR500 and drive a 2009 BMW 7 Series. I do my own maintenance and performance tuning, and I research protective gear and engine hardware upgrades.</p>
+          </article>
+          <article class="card">
+            <h3 class="card__title">Games and mods</h3>
+            <p class="card__desc">I organize casual Dota 2 tournaments for friends in Vancouver and tinker with Minecraft modding in NeoForge.</p>
+          </article>
+          <article class="card">
+            <h3 class="card__title">In the kitchen</h3>
+            <p class="card__desc">I cook at home: Eggs Benedict, traditional Russian solyanka and Ragu alla Bolognese. I brew masala chai and mix a decent Aperol Spritz.</p>
+          </article>
+          <article class="card">
+            <h3 class="card__title">Houseplants</h3>
+            <p class="card__desc">I grow houseplants at home, including a Foxtail Fern.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h2 class="heading heading-sm main-footer__heading-sm">
+              <span>Social</span>
+            </h2>
+            <div class="main-footer__social-cont">
+              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/konstantin-tovshtein">
+                <img
+                  class="main-footer__icon"
+                  src="./assets/png/linkedin-ico.png"
+                  alt="LinkedIn"
+                />
+              </a>
+              <a target="_blank" rel="noreferrer" href="https://github.com/konstantin-tovshtein">
+                <img
+                  class="main-footer__icon main-footer__icon--mr-none"
+                  src="./assets/png/github-ico.png"
+                  alt="GitHub"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="main-footer__row main-footer__row-2">
+            <h4 class="heading heading-sm text-lt">Konstantin Tovshtein</h4>
+            <p class="main-footer__short-desc">
+              BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. Based in Vancouver, BC.
+            </p>
+          </div>
+        </div>
+
+        <div class="main-footer__lower">
+          &copy; Copyright <span class="js-year">2026</span>. Konstantin Tovshtein.
+        </div>
+      </div>
+    </footer>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
