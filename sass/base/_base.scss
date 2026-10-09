@@ -19,25 +19,30 @@ html {
 }
 
 body {
+  @include type-body;
   box-sizing: border-box;
   position: relative;
-  line-height: 1.6;
   overflow-x: hidden;
   overflow-y: scroll;
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
+  font-feature-settings: $ff-text;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3,
-h4,
-.heading-primary,
-.heading-sec__main,
-.heading-sm {
-  font-family: var(--font-heading);
+h4 {
+  text-wrap: balance;
+}
+
+p,
+li,
+figcaption {
+  text-wrap: pretty;
 }
 
 a {
@@ -60,11 +65,10 @@ li {
   top: 1.2rem;
   left: 1.6rem;
   z-index: 2000;
+  @include type-button;
   padding: 1.2rem 2rem;
   background: var(--accent-btn);
   color: var(--on-accent);
-  font-size: 1.6rem;
-  font-weight: 700;
   border-radius: $commonBorderRadius;
   transform: translateY(-200%);
   transition: transform var(--transition);

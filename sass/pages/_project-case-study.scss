@@ -29,6 +29,10 @@
     }
   }
 
+  .heading-primary {
+    @include type-display-page;
+  }
+
   &__info {
     margin: 3rem auto 0 auto;
     max-width: 80rem;
@@ -46,13 +50,8 @@
     margin: auto;
 
     &-title {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 3rem;
-      font-family: var(--font-heading);
-      @include respond(phone) {
-        font-size: 2.4rem;
-      }
+      @include type-title;
+      margin-bottom: 2.4rem;
     }
   }
 
@@ -76,8 +75,8 @@
     margin: 0 0 7rem 0;
 
     &-para {
-      font-size: 1.8rem;
-      line-height: 1.7;
+      @include type-body-long;
+      max-width: $measure;
       color: var(--text-muted);
       margin-bottom: 2rem;
     }
@@ -88,17 +87,6 @@
     &-list {
       display: flex;
       flex-wrap: wrap;
-    }
-    &-item {
-      padding: 1rem 2rem;
-      margin-bottom: 1.5rem;
-      margin-right: 1.5rem;
-      font-size: 1.6rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: $commonBorderRadius;
-      font-weight: 600;
-      color: var(--text-muted);
     }
   }
   &__links {
@@ -130,9 +118,10 @@
 }
 
 .project-details__caption {
-  margin-top: 1.5rem;
-  font-size: 1.5rem;
-  line-height: 1.5;
+  @include type-meta;
+  max-width: $measure;
+  margin: 1.5rem auto 0;
+  text-wrap: balance;
   color: var(--text-muted);
   text-align: center;
 }

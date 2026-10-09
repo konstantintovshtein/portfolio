@@ -20,8 +20,8 @@
   --accent-btn-rgb: 37 99 235;
   --bg-rgb: 9 9 11;
 
-  --font-heading: 'Archivo', system-ui, sans-serif;
-  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  // One family for everything; type roles live in abstracts/_type.scss.
+  --font-sans: 'KT Sans', 'KT Sans Fallback', system-ui, sans-serif;
 
   --transition: 200ms ease;
 }

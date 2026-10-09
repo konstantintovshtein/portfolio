@@ -36,7 +36,3 @@ Inside media queries 1em is always 16px i.e 1em = 16px at every screen size only
     } //1800
   }
 }
-
-@mixin secondaryFont {
-  font-family: var(--font-heading);
-}

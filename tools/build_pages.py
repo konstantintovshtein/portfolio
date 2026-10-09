@@ -56,7 +56,7 @@ def head(title, desc):
 
     <link
       rel="preload"
-      href="./assets/fonts/space-grotesk-latin-wght-normal.woff2"
+      href="./assets/fonts/kt-sans-latin-var.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -416,7 +416,7 @@ role_cards = "\n".join(
 index_body = f"""    <section class="home-hero">
       <div class="home-hero__content">
         <span class="home-hero__eyebrow">MIS &middot; Accounting &middot; Computer Science</span>
-        <h1 class="heading-primary">Hey, I'm Konstantin Tovshtein</h1>
+        <h1 class="heading-primary">Hey, I'm <span class="heading-primary__name">Konstantin Tovshtein</span></h1>
         <div class="home-hero__info">
           <p class="text-primary">
             A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. Next stop, a career in fintech.
@@ -617,7 +617,6 @@ about_body = (
       <div class="main-container about-page__grid">
         <div>
           <h2 class="section-head__title">My story</h2>
-          <br />
           <p class="about-page__para">
             I'm <strong>Konstantin Tovshtein</strong>, a fourth-year Business Administration student at <strong>Simon Fraser University</strong> in Burnaby. I concentrate in <strong>Management Information Systems</strong> and <strong>Accounting</strong>, with a minor in <strong>Computer Science</strong>.
           </p>
@@ -633,7 +632,6 @@ about_body = (
         </div>
         <div>
           <h2 class="section-head__title">Education</h2>
-          <br />
           <div class="about-page__edu-item">
             <p class="about-page__edu-school">Simon Fraser University</p>
             <p class="about-page__edu-detail">Bachelor of Business Administration, fourth year. Concentrations in Management Information Systems and Accounting. Minor in Computer Science.</p>

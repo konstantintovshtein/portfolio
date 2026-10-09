@@ -5,11 +5,10 @@
     padding: 1rem 2rem;
     margin-bottom: 1.5rem;
     margin-right: 1.5rem;
-    font-size: 1.6rem;
+    @include type-chip;
     background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: $commonBorderRadius;
-    font-weight: 600;
     color: var(--text-muted);
   }
 }

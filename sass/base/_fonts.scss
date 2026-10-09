@@ -1,24 +1,27 @@
-// Self-hosted variable fonts (Fontsource 5.3.0, latin subset, SIL Open Font License 1.1).
-// Licence texts: assets/fonts/LICENSE-*.txt
+// KT Sans: Mona Sans (SIL Open Font License 1.1), subset to Latin and renamed by tools/build_font.py.
+// One variable file carries every style: weight 400-800 and width 100% (normal) to 125% (expanded).
+// Licence text: assets/fonts/LICENSE-kt-sans.txt
 
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'KT Sans';
   font-style: normal;
   font-display: swap;
-  font-weight: 300 700;
-  src: url('../assets/fonts/space-grotesk-latin-wght-normal.woff2') format('woff2-variations'),
-    url('../assets/fonts/space-grotesk-latin-wght-normal.woff2') format('woff2');
+  font-weight: 400 800;
+  font-stretch: 100% 125%;
+  src: url('../assets/fonts/kt-sans-latin-var.woff2') format('woff2-variations'),
+    url('../assets/fonts/kt-sans-latin-var.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+// Arial resized to KT Sans' average width and line metrics (measured on the site's own copy),
+// so reading text barely moves when the web font arrives.
 @font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url('../assets/fonts/archivo-latin-wght-normal.woff2') format('woff2-variations'),
-    url('../assets/fonts/archivo-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  font-family: 'KT Sans Fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica Neue'), local('Helvetica'), local('Arimo'),
+    local('Liberation Sans');
+  size-adjust: 101.22%;
+  ascent-override: 107.69%;
+  descent-override: 31.62%;
+  line-gap-override: 0%;
 }

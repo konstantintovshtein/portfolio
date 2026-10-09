@@ -1,0 +1,261 @@
+// Type roles. Every text style on the site comes from one of these mixins; change a role here,
+// not in components. One family, KT Sans, in three widths (the Width Rule):
+//   expanded (125%)       names and figures: display, page titles, the contact heading, stats
+//   semi-expanded (112.5%) headings and labels: section headlines, titles, eyebrows, badges, the name
+//   normal (100%)         everything you read or press: lead, body, meta, nav, buttons, chips, forms
+// Sizes are rem on the 62.5% root, so 1.7rem is 17px. Reading text never goes below 16px.
+
+$wd-expanded: 125%;
+$wd-semi: 112.5%;
+$wd-normal: 100%;
+
+// font-feature-settings replaces the whole list, so each set repeats the text features.
+// ss05 and ss06 swap Mona Sans' geometric a and g for two-storey forms: the texture of the
+// industrial-era grotesques printed on ledger forms, and less like GitHub's own setting.
+$ff-text: 'kern' 1, 'ss05' 1, 'ss06' 1;
+$ff-caps: $ff-text, 'case' 1; // lifts dashes, dots and brackets to the height of capitals
+$ff-figures: $ff-text, 'tnum' 1; // equal-width figures, like a ledger column
+
+// Line length of about 70 characters. ch would count KT Sans' wide zero and run long.
+$measure: 34em;
+$measure-lead: 30em;
+
+// Light text on Midnight reads thin at 400, so reading text sits one notch heavier.
+$wght-read: 430;
+
+:root {
+  --fs-display: 5.6rem;
+  --fs-display-page: 4.8rem;
+  --fs-headline-caps: 4rem;
+  --fs-headline: 3.4rem;
+  --fs-title: 2.4rem;
+  --fs-stat: 5.2rem;
+  --fs-lead: 2.1rem;
+  --fs-body-long: 1.8rem;
+  --fs-body: 1.7rem;
+  --fs-small: 1.6rem;
+  --fs-meta: 1.5rem;
+  --fs-label: 1.4rem;
+  --fs-badge: 1.3rem;
+  --fs-ui: 1.6rem;
+  --fs-nav: 1.5rem;
+  --fs-name: 1.7rem;
+  --fs-menu: 1.7rem;
+
+  // On narrow screens the wide styles lose width before they lose size.
+  --wd-display: #{$wd-expanded};
+  --wd-stat: #{$wd-expanded};
+  --wd-name: #{$wd-semi};
+
+  // Below 1200px the header name stacks into a two-line lockup (components/_header.scss).
+  @include respond(tab-land) {
+    --fs-name: 1.5rem;
+    --wd-name: #{$wd-normal};
+  }
+
+  @include respond(tab-port) {
+    --fs-display: 4.8rem;
+    --fs-display-page: 4.2rem;
+    --wd-display: #{$wd-semi};
+  }
+
+  @include respond(phone) {
+    --fs-display: 4rem;
+    --fs-display-page: 3.4rem;
+    --fs-headline-caps: 3.2rem;
+    --fs-headline: 2.8rem;
+    --fs-title: 2.2rem;
+    --fs-stat: 4rem;
+    --fs-lead: 1.8rem;
+    --fs-body-long: 1.7rem;
+    --fs-label: 1.3rem;
+    --wd-display: #{$wd-normal};
+    --wd-stat: #{$wd-semi};
+  }
+}
+
+@mixin caps($tracking) {
+  text-transform: uppercase;
+  letter-spacing: $tracking;
+  font-feature-settings: $ff-caps;
+}
+
+// Names and figures
+
+@mixin type-display {
+  @include caps(0);
+  font-size: var(--fs-display);
+  font-weight: 800;
+  font-stretch: var(--wd-display);
+  line-height: 1;
+  text-wrap: balance;
+}
+
+@mixin type-display-page {
+  @include caps(0);
+  font-size: var(--fs-display-page);
+  font-weight: 800;
+  font-stretch: var(--wd-display);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+@mixin type-headline-caps {
+  @include caps(0.01em);
+  font-size: var(--fs-headline-caps);
+  font-weight: 800;
+  font-stretch: $wd-expanded;
+  line-height: 1.1;
+}
+
+@mixin type-stat {
+  font-size: var(--fs-stat);
+  font-weight: 800;
+  font-stretch: var(--wd-stat);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-feature-settings: $ff-figures;
+}
+
+// Headings and labels
+
+@mixin type-headline {
+  font-size: var(--fs-headline);
+  font-weight: 750;
+  font-stretch: $wd-semi;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@mixin type-title {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  font-stretch: $wd-semi;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+@mixin type-label {
+  @include caps(0.09em);
+  font-size: var(--fs-label);
+  font-weight: 650;
+  font-stretch: $wd-semi;
+  line-height: 1.3;
+}
+
+@mixin type-badge {
+  @include caps(0.08em);
+  font-size: var(--fs-badge);
+  font-weight: 650;
+  font-stretch: $wd-semi;
+  line-height: 1.3;
+}
+
+@mixin type-name {
+  @include caps(0.04em);
+  font-size: var(--fs-name);
+  font-weight: 750;
+  font-stretch: var(--wd-name);
+  line-height: 1.3;
+}
+
+@mixin type-menu {
+  @include caps(0.08em);
+  font-size: var(--fs-menu);
+  font-weight: 700;
+  font-stretch: $wd-semi;
+  line-height: 1.3;
+}
+
+// Reading text
+
+// Leads are short and centred, so their lines are balanced rather than filled.
+@mixin type-lead {
+  font-size: var(--fs-lead);
+  font-weight: $wght-read;
+  font-stretch: $wd-normal;
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+@mixin type-body {
+  font-size: var(--fs-body);
+  font-weight: $wght-read;
+  font-stretch: $wd-normal;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+}
+
+@mixin type-body-long {
+  @include type-body;
+  font-size: var(--fs-body-long);
+  line-height: 1.7;
+}
+
+@mixin type-small {
+  @include type-body;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+@mixin type-meta {
+  @include type-body;
+  font-size: var(--fs-meta);
+  line-height: 1.5;
+}
+
+// Controls
+
+@mixin type-nav {
+  @include caps(0.06em);
+  font-size: var(--fs-nav);
+  font-weight: 600;
+  font-stretch: $wd-normal;
+  line-height: 1.3;
+}
+
+@mixin type-button {
+  @include caps(0.07em);
+  font-size: var(--fs-ui);
+  font-weight: 700;
+  font-stretch: $wd-normal;
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+@mixin type-chip {
+  font-size: var(--fs-ui);
+  font-weight: 550;
+  font-stretch: $wd-normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+@mixin type-link {
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  font-stretch: $wd-normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+@mixin type-field-label {
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  font-stretch: $wd-normal;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+// 17px keeps phones from zooming in when a field takes focus.
+@mixin type-input {
+  font-size: var(--fs-body);
+  font-weight: 450;
+  font-stretch: $wd-normal;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+}

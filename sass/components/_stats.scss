@@ -16,11 +16,8 @@
   }
 
   &__value {
+    @include type-stat;
     display: block;
-    font-family: var(--font-heading);
-    font-size: 4.4rem;
-    font-weight: 800;
-    line-height: 1.1;
     color: var(--text);
 
     span {
@@ -29,10 +26,9 @@
   }
 
   &__label {
+    @include type-meta;
     display: block;
-    margin-top: 1rem;
-    font-size: 1.5rem;
+    margin-top: 1.2rem;
     color: var(--text-muted);
-    line-height: 1.5;
   }
 }
