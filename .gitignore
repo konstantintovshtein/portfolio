@@ -129,3 +129,11 @@ CLAUDE.md
 # Research notes (not part of the site)
 research_notes/
 reports/
+
+# Local tool settings
+.claude/
+
+# Impeccable design tool (local context and settings)
+.impeccable/
+PRODUCT.md
+DESIGN.md

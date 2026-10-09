@@ -37,37 +37,36 @@
   }
 
   &__social-cont {
-    margin-top: 2rem;
+    display: flex;
+    gap: 1.2rem;
+    margin: 1.5rem 0 0 -1rem;
+  }
+
+  // 44px tap targets around 24px brand icons; hover changes the background, never the logo colour.
+  &__social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: $commonBorderRadius;
+    transition: background-color var(--transition);
+
+    &:hover {
+      background: var(--surface-2);
+    }
   }
 
   &__icon {
-    margin-right: 1rem;
-    width: 2.5rem;
-    opacity: 0.8;
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+    opacity: 0.85;
     transition: opacity var(--transition);
-
-    &:hover {
-      opacity: 1;
-    }
-    &--mr-none {
-      margin-right: 0;
-    }
   }
 
-  &__lower {
-    padding: 4rem 0;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    text-align: left;
-    text-align: center;
-    a {
-      text-decoration: underline;
-      font-weight: bold;
-      margin-left: 2px;
-    }
-    @include respond(tab-port) {
-      padding: 3.5rem 0;
-    }
+  &__social:hover &__icon {
+    opacity: 1;
   }
+
 }

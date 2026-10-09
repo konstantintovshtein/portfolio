@@ -4,6 +4,7 @@
   "description": "Personal portfolio of Konstantin Tovshtein, based on the Dopefolio template.",
   "main": "index.js",
   "scripts": {
+    "build:html": "python tools/build_pages.py",
     "compile:scss": "sass sass/main.scss css/style.css --no-source-map --silence-deprecation=import",
     "watch:scss": "sass sass/main.scss css/style.css --no-source-map --silence-deprecation=import --watch",
     "prefix:css": "postcss css/style.css --use autoprefixer -o css/style.css --no-map",

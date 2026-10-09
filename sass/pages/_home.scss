@@ -2,12 +2,10 @@
   color: var(--text);
   background: radial-gradient(
       ellipse at top,
-      rgba(37, 99, 235, 0.22),
+      rgb(var(--accent-btn-rgb) / 0.22),
       transparent 60%
     ),
-    linear-gradient(rgba(9, 9, 11, 0.9), rgba(9, 9, 11, 0.9)),
-    url(../../assets/svg/common-bg.svg);
-  background-color: var(--bg);
+    var(--bg);
   background-position: center;
 
   height: 100vh;
@@ -107,124 +105,16 @@
     font-weight: 600;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-mist);
     margin-bottom: 2.5rem;
   }
 }
 
-.about {
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  &__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10rem;
-    @include respond(tab-port) {
-      grid-template-columns: 1fr;
-      grid-gap: 8rem;
-    }
-    &-title {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 3rem;
-      font-family: var(--font-heading);
-      @include respond(phone) {
-        font-size: 2.4rem;
-      }
-    }
-    &-details-para {
-      font-size: 1.8rem;
-      color: var(--text-muted);
-      max-width: 60rem;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-      &--hl {
-        font-weight: 700;
-        color: var(--text);
-        margin: 0 3px;
-      }
-      &:last-child {
-        margin-bottom: 4rem;
-      }
-    }
-  }
-}
-
-.projects {
-  &__row {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    grid-gap: 5rem;
-    margin-bottom: 11rem;
-
-    @include respond(tab-port) {
-      grid-template-columns: 1fr;
-      grid-gap: 2rem;
-      margin-bottom: 8rem;
-    }
-
-    @include respond(tab-port) {
-      text-align: center;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &-img-cont {
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: $commonBorderRadius;
-      background: var(--surface);
-    }
-    &-img {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-      opacity: 0.9;
-      transition: opacity var(--transition);
-    }
-    &:hover &-img {
-      opacity: 1;
-    }
-    &-content {
-      padding: 2rem 0;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: flex-start;
-
-      @include respond(tab-port) {
-        align-items: center;
-      }
-
-      &-title {
-        font-weight: 700;
-        font-size: 2.8rem;
-        margin-bottom: 2rem;
-        @include respond(phone) {
-          font-size: 2.4rem;
-        }
-      }
-      &-desc {
-        font-size: 1.8rem;
-        color: var(--text-muted);
-        max-width: 60rem;
-        line-height: 1.7;
-        margin-bottom: 3rem;
-        @include respond(phone) {
-          font-size: 1.7rem;
-        }
-      }
-    }
-  }
-}
 
 .contact {
   background: radial-gradient(
       ellipse at bottom,
-      rgba(37, 99, 235, 0.18),
+      rgb(var(--accent-btn-rgb) / 0.18),
       transparent 60%
     ),
     var(--bg);
@@ -275,7 +165,7 @@
     &:focus-visible {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.25);
     }
     /* Code for Modern Browsers */
     &::placeholder {
@@ -321,13 +211,63 @@
       font-size: 1.6rem;
     }
   }
-  &__btn {
-    width: 30%;
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
 
+    @include respond(phone) {
+      flex-direction: column-reverse;
+      align-items: stretch;
+    }
+  }
+
+  &__status {
+    flex: 1;
+    margin: 0;
+    text-align: left;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+
+    &:empty {
+      display: none;
+    }
+
+    &[data-state='success'] {
+      color: var(--accent-mist);
+    }
+
+    &[data-state='error'] {
+      color: var(--danger);
+    }
+  }
+
+  &__btn {
+    margin-left: auto;
     padding: 2rem 4rem;
     font-size: 1.6rem;
+
     @include respond(phone) {
       width: 100%;
+    }
+  }
+
+  &__honeypot {
+    display: none;
+  }
+
+  &__alt {
+    margin-top: 2.5rem;
+    text-align: left;
+    font-size: 1.6rem;
+    color: var(--text-muted);
+
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 0.4rem;
     }
   }
 }

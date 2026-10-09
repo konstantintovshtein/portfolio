@@ -16,8 +16,8 @@
     background-color: var(--text-muted);
     border-radius: 50%;
     opacity: 1;
-    animation: wheel 1.3s infinite;
-    -webkit-animation: wheel 1.3s infinite;
+    // Plays three times as a hint, then rests.
+    animation: wheel 1.3s ease-out 3;
   }
 }
 

@@ -9,16 +9,17 @@
     <title>Projects | Konstantin Tovshtein</title>
     <meta name="description" content="Projects by Konstantin Tovshtein, including a GPU sharing platform built at Stormhacks 2026 and the Beedie Business Analytics Hackathon." />
 
-    <link rel="stylesheet" href="css/style.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="./assets/fonts/space-grotesk-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="header">
       <div class="header__content">
         <a href="./index.html" class="header__logo-container">
@@ -34,7 +35,8 @@
           <span class="header__logo-sub">Konstantin Tovshtein</span>
         </a>
         <div class="header__main">
-          <ul class="header__links">
+          <nav class="header__nav" aria-label="Main">
+            <ul class="header__links">
             <li class="header__link-wrapper">
               <a href="./index.html" class="header__link">Home</a>
             </li>
@@ -50,7 +52,8 @@
             <li class="header__link-wrapper">
               <a href="./index.html#contact" class="header__link">Contact</a>
             </li>
-          </ul>
+            </ul>
+          </nav>
           <button
             type="button"
             class="header__main-ham-menu-cont"
@@ -72,7 +75,7 @@
         </div>
       </div>
       <div class="header__sm-menu" id="mobile-menu">
-        <div class="header__sm-menu-content">
+        <nav class="header__sm-menu-content" aria-label="Main">
           <ul class="header__sm-menu-links">
             <li class="header__sm-menu-link">
               <a href="./index.html">Home</a>
@@ -90,9 +93,10 @@
               <a href="./index.html#contact">Contact</a>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
     </header>
+    <main id="main" tabindex="-1">
     <section class="page-hero">
       <div class="main-container">
         <h1 class="heading-primary">Projects</h1>
@@ -165,32 +169,23 @@
         </div>
       </div>
     </section>
+    </main>
     <footer class="main-footer">
       <div class="main-container">
         <div class="main-footer__upper">
           <div class="main-footer__row main-footer__row-1">
-            <h2 class="heading heading-sm main-footer__heading-sm">
-              <span>Social</span>
-            </h2>
+            <h2 class="heading heading-sm main-footer__heading-sm">Social</h2>
             <div class="main-footer__social-cont">
-              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/linkedin-ico.png"
-                  alt="LinkedIn"
-                />
+              <a class="main-footer__social" href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="" width="24" height="24" />
               </a>
-              <a target="_blank" rel="noreferrer" href="https://github.com/konstantintovshtein?tab=repositories">
-                <img
-                  class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/github-ico.png"
-                  alt="GitHub"
-                />
+              <a class="main-footer__social" href="https://github.com/konstantintovshtein?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">
+                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="" width="24" height="24" />
               </a>
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">Konstantin Tovshtein</h4>
+            <h2 class="heading heading-sm">Konstantin Tovshtein</h2>
             <p class="main-footer__short-desc">
               BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. Based in Vancouver, BC.
             </p>

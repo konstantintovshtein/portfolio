@@ -9,16 +9,17 @@
     <title>Konstantin Tovshtein</title>
     <meta name="description" content="Portfolio of Konstantin Tovshtein, a BBA student at Simon Fraser University in Management Information Systems and Accounting, aiming for fintech and information systems." />
 
-    <link rel="stylesheet" href="css/style.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="./assets/fonts/space-grotesk-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="header">
       <div class="header__content">
         <a href="./index.html" class="header__logo-container">
@@ -34,7 +35,8 @@
           <span class="header__logo-sub">Konstantin Tovshtein</span>
         </a>
         <div class="header__main">
-          <ul class="header__links">
+          <nav class="header__nav" aria-label="Main">
+            <ul class="header__links">
             <li class="header__link-wrapper">
               <a href="./index.html" class="header__link" aria-current="page">Home</a>
             </li>
@@ -50,7 +52,8 @@
             <li class="header__link-wrapper">
               <a href="./index.html#contact" class="header__link">Contact</a>
             </li>
-          </ul>
+            </ul>
+          </nav>
           <button
             type="button"
             class="header__main-ham-menu-cont"
@@ -72,7 +75,7 @@
         </div>
       </div>
       <div class="header__sm-menu" id="mobile-menu">
-        <div class="header__sm-menu-content">
+        <nav class="header__sm-menu-content" aria-label="Main">
           <ul class="header__sm-menu-links">
             <li class="header__sm-menu-link">
               <a href="./index.html" aria-current="page">Home</a>
@@ -90,9 +93,10 @@
               <a href="./index.html#contact">Contact</a>
             </li>
           </ul>
-        </div>
+        </nav>
       </div>
     </header>
+    <main id="main" tabindex="-1">
     <section class="home-hero">
       <div class="home-hero__content">
         <span class="home-hero__eyebrow">MIS &middot; Accounting &middot; Computer Science</span>
@@ -109,21 +113,13 @@
       </div>
       <div class="home-hero__socials">
         <div class="home-hero__social">
-          <a href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/" class="home-hero__social-icon-link" target="_blank" rel="noreferrer">
-            <img
-              src="./assets/png/linkedin-ico.png"
-              alt="LinkedIn"
-              class="home-hero__social-icon"
-            />
+          <a href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/" class="home-hero__social-icon-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <img src="./assets/png/linkedin-ico.png" alt="" width="26" height="26" class="home-hero__social-icon" />
           </a>
         </div>
         <div class="home-hero__social">
-          <a href="https://github.com/konstantintovshtein?tab=repositories" class="home-hero__social-icon-link home-hero__social-icon-link--bd-none" target="_blank" rel="noreferrer">
-            <img
-              src="./assets/png/github-ico.png"
-              alt="GitHub"
-              class="home-hero__social-icon"
-            />
+          <a href="https://github.com/konstantintovshtein?tab=repositories" class="home-hero__social-icon-link home-hero__social-icon-link--bd-none" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">
+            <img src="./assets/png/github-ico.png" alt="" width="26" height="26" class="home-hero__social-icon" />
           </a>
         </div>
       </div>
@@ -227,20 +223,20 @@
         </div>
       </div>
     </section>
-    <section id="contact" class="contact sec-pad dynamicBg">
+    <section id="contact" class="contact sec-pad" aria-labelledby="contact-title">
       <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-med">
+        <h2 class="heading heading-sec heading-sec__mb-med" id="contact-title">
           <span class="heading-sec__main heading-sec__main--lt">Contact</span>
           <span class="heading-sec__sub heading-sec__sub--lt">
             Open to roles, contracts, or conversations about interesting work.
           </span>
         </h2>
         <div class="contact__form-container">
-          <!-- TODO: replace YOUR_FORM_ID with your Formspree form ID (https://formspree.io) -->
           <form
             action="https://formspree.io/f/YOUR_FORM_ID"
             method="POST"
             class="contact__form"
+            data-contact-form
           >
             <div class="contact__form-field">
               <label class="contact__form-label" for="name">Name</label>
@@ -279,39 +275,36 @@
                 id="message"
               ></textarea>
             </div>
-            <button type="submit" class="btn btn--theme contact__btn">
-              Submit
-            </button>
+            <input type="text" name="_gotcha" class="contact__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="contact__actions">
+              <p class="contact__status" role="status" data-contact-status></p>
+              <button type="submit" class="btn btn--theme contact__btn">Send Message</button>
+            </div>
           </form>
+          <p class="contact__alt">
+            Prefer LinkedIn?
+            <a href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/" target="_blank" rel="noopener noreferrer">Message me there</a>.
+          </p>
         </div>
       </div>
     </section>
+    </main>
     <footer class="main-footer">
       <div class="main-container">
         <div class="main-footer__upper">
           <div class="main-footer__row main-footer__row-1">
-            <h2 class="heading heading-sm main-footer__heading-sm">
-              <span>Social</span>
-            </h2>
+            <h2 class="heading heading-sm main-footer__heading-sm">Social</h2>
             <div class="main-footer__social-cont">
-              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/linkedin-ico.png"
-                  alt="LinkedIn"
-                />
+              <a class="main-footer__social" href="https://www.linkedin.com/in/konstantin-tovshtein-0b1a21221/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                <img class="main-footer__icon" src="./assets/png/linkedin-ico.png" alt="" width="24" height="24" />
               </a>
-              <a target="_blank" rel="noreferrer" href="https://github.com/konstantintovshtein?tab=repositories">
-                <img
-                  class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/github-ico.png"
-                  alt="GitHub"
-                />
+              <a class="main-footer__social" href="https://github.com/konstantintovshtein?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">
+                <img class="main-footer__icon" src="./assets/png/github-ico.png" alt="" width="24" height="24" />
               </a>
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">Konstantin Tovshtein</h4>
+            <h2 class="heading heading-sm">Konstantin Tovshtein</h2>
             <p class="main-footer__short-desc">
               BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. Based in Vancouver, BC.
             </p>

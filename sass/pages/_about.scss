@@ -3,7 +3,7 @@
   text-align: center;
   background: radial-gradient(
       ellipse at top,
-      rgba(37, 99, 235, 0.2),
+      rgb(var(--accent-btn-rgb) / 0.2),
       transparent 65%
     ),
     var(--bg);
@@ -149,4 +149,10 @@
   strong {
     color: var(--text);
   }
+}
+
+.about-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }

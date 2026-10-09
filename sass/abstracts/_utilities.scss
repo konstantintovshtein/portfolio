@@ -6,18 +6,11 @@
   text-align: center;
   color: var(--text);
   @include respond(phone) {
-    font-size: 4.5rem;
+    font-size: 4rem;
   }
 }
 
 .heading-sec {
-  &__mb-bg {
-    margin-bottom: 11rem;
-    @include respond(tab-port) {
-      margin-bottom: 8rem;
-    }
-  }
-
   &__mb-med {
     margin-bottom: 9rem;
     @include respond(tab-port) {
@@ -88,14 +81,14 @@
 
 .btn {
   background: var(--accent-btn);
-  color: #fff;
+  color: var(--on-accent);
   text-transform: uppercase;
   letter-spacing: 2px;
   display: inline-block;
   font-weight: 700;
   border: 1px solid transparent;
   border-radius: $commonBorderRadius;
-  box-shadow: 0 8px 24px -8px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 8px 24px -8px rgb(var(--accent-btn-rgb) / 0.5);
   cursor: pointer;
   transition: background-color var(--transition), border-color var(--transition),
     color var(--transition);
@@ -104,9 +97,13 @@
     background: var(--accent-hover);
   }
 
-  &--bg {
-    padding: 1.5rem 8rem;
-    font-size: 2rem;
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  &:disabled:hover {
+    background: var(--accent-btn);
   }
   &--med {
     padding: 1.5rem 5rem;
@@ -115,7 +112,7 @@
 
   &--theme {
     background: var(--accent-btn);
-    color: #fff;
+    color: var(--on-accent);
   }
   &--theme-inv {
     color: var(--text);

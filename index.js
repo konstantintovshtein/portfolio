@@ -83,3 +83,53 @@ document.addEventListener('click', (e) => {
     },
   })
 })
+
+// --- Contact form: send in the background and report the result on the page.
+// Without JavaScript the form still posts to Formspree normally.
+const contactForm = document.querySelector('[data-contact-form]')
+
+if (contactForm) {
+  const status = contactForm.querySelector('[data-contact-status]')
+  const submitBtn = contactForm.querySelector('button[type="submit"]')
+  const fallback = 'Please try again, or message me on LinkedIn.'
+
+  const setStatus = (message, state) => {
+    status.textContent = message
+    status.dataset.state = state
+  }
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    if (contactForm.action.includes('YOUR_FORM_ID')) {
+      setStatus("This form isn't connected yet, so your message wasn't sent. Please message me on LinkedIn.", 'error')
+      return
+    }
+
+    const label = submitBtn.textContent
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Sending…'
+    setStatus('', '')
+
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' },
+      })
+      if (res.ok) {
+        contactForm.reset()
+        setStatus('Thanks, your message was sent.', 'success')
+      } else {
+        const data = await res.json().catch(() => ({}))
+        const detail = Array.isArray(data.errors) ? data.errors.map((err) => err.message).join(' ') : ''
+        setStatus(`Your message wasn't sent${detail ? `: ${detail}` : '.'} ${fallback}`, 'error')
+      }
+    } catch {
+      setStatus(`Your message wasn't sent because the connection failed. ${fallback}`, 'error')
+    } finally {
+      submitBtn.disabled = false
+      submitBtn.textContent = label
+    }
+  })
+}

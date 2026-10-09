@@ -13,16 +13,6 @@ html {
   scroll-behavior: smooth;
   background: var(--bg);
 
-  @include respond(tab-land) {
-    // width < 1200?
-    font-size: 59%; //1 rem =
-  }
-
-  @include respond(tab-port) {
-    // width < 900?
-    font-size: 56%; //1 rem =
-  }
-
   @include respond(big-desktop) {
     font-size: 65%; //1rem =
   }
@@ -61,7 +51,32 @@ li {
 
 ::selection {
   background: var(--accent-btn);
-  color: #fff;
+  color: var(--on-accent);
+}
+
+// Visible only when focused with the keyboard: jumps past the header.
+.skip-link {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.6rem;
+  z-index: 2000;
+  padding: 1.2rem 2rem;
+  background: var(--accent-btn);
+  color: var(--on-accent);
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: $commonBorderRadius;
+  transform: translateY(-200%);
+  transition: transform var(--transition);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+// The skip link and jump links move focus here; it is a region, not a control.
+main:focus {
+  outline: none;
 }
 
 // Keep mouse clicks clean but show a clear ring for keyboard users

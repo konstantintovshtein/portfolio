@@ -32,7 +32,7 @@
   &--featured {
     background: radial-gradient(
         ellipse at top right,
-        rgba(37, 99, 235, 0.16),
+        rgb(var(--accent-btn-rgb) / 0.16),
         transparent 60%
       ),
       var(--surface);
@@ -57,6 +57,7 @@
   }
 
   &__desc {
+    max-width: 65ch;
     font-size: 1.7rem;
     line-height: 1.7;
     color: var(--text-muted);
@@ -75,17 +76,26 @@
   }
 }
 
+// Padded to a 44px-tall hit area; the underline appears on hover.
 .text-link {
   display: inline-block;
+  padding: 1.2rem 0;
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--accent);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.5rem;
+  transition: text-decoration-color var(--transition);
 
   &:hover {
-    border-color: var(--accent);
+    text-decoration-color: var(--accent);
   }
+}
+
+// The featured card sits on a blue tint, so its eyebrow uses the lighter blue for contrast.
+.card--featured .card__eyebrow {
+  color: var(--accent-mist);
 }
 
 .card__top {
@@ -106,11 +116,11 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.5rem 1.2rem;
-  border: 1px solid rgba(59, 130, 246, 0.45);
+  border: 1px solid rgb(var(--accent-rgb) / 0.45);
   border-radius: 999px;
-  background: rgba(37, 99, 235, 0.12);
-  color: #93c5fd;
-  font-size: 1.25rem;
+  background: rgb(var(--accent-btn-rgb) / 0.12);
+  color: var(--accent-mist);
+  font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;

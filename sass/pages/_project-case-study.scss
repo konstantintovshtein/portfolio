@@ -2,12 +2,10 @@
   color: var(--text);
   background: radial-gradient(
       ellipse at top,
-      rgba(37, 99, 235, 0.22),
+      rgb(var(--accent-btn-rgb) / 0.22),
       transparent 60%
     ),
-    linear-gradient(rgba(9, 9, 11, 0.9), rgba(9, 9, 11, 0.9)),
-    url(../../assets/svg/common-bg.svg);
-  background-color: var(--bg);
+    var(--bg);
   background-size: cover;
   background-position: center;
   position: relative;

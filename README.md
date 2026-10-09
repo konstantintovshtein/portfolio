@@ -10,7 +10,15 @@ Static HTML and SCSS, no framework. Open `index.html` in a browser to view it.
 npm install
 npm run watch:scss   # recompile css/style.css while editing
 npm run build        # compile, autoprefix and minify css/style.css
+npm run build:html   # regenerate the eight pages from tools/build_pages.py
 ```
+
+Page content, the shared header and footer, and the contact form live in `tools/build_pages.py`. Edit them there; the `.html` files are generated.
+
+Two settings in that file:
+
+- `FORMSPREE_ID`: your Formspree form ID, so the contact form can send messages.
+- Drop a résumé at `assets/Konstantin-Tovshtein-Resume.pdf` and rebuild to add "Download Résumé" buttons.
 
 Theme colors and fonts live in `sass/abstracts/_theme.scss`.
 
