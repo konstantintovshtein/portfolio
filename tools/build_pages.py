@@ -18,6 +18,17 @@ FORMSPREE_ID = "YOUR_FORM_ID"
 RESUME = "assets/Konstantin-Tovshtein-Resume.pdf"
 HAS_RESUME = (ROOT / RESUME).exists()
 
+# Link previews (LinkedIn, Slack, iMessage) need absolute addresses.
+SITE_URL = "https://konstantintovshtein.github.io/portfolio/"
+# 1200x630 card shown with every shared link. Edit tools/share-card.html and re-render it
+# (instructions at the top of that file); the copy there must stay factual.
+SHARE_IMAGE = "assets/png/share-card.png"
+SHARE_IMAGE_ALT = (
+    "Konstantin Tovshtein, BBA student at Simon Fraser University in MIS and Accounting. "
+    "25% lower system costs after his ProxySmart dashboard at Jetlink Solutions; "
+    "10% above his assigned workload at Crowe MacKay."
+)
+
 NAV = [
     ("home", "./index.html", "Home"),
     ("about", "./about.html", "About"),
@@ -42,7 +53,8 @@ def ext_links(links, indent, cls="btn btn--med btn--theme-inv"):
     )
 
 
-def head(title, desc):
+def head(name, title, desc):
+    url = SITE_URL if name == "index.html" else SITE_URL + name
     return f"""<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,6 +65,19 @@ def head(title, desc):
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content="{desc}" />
+    <link rel="canonical" href="{url}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Konstantin Tovshtein" />
+    <meta property="og:title" content="{title}" />
+    <meta property="og:description" content="{desc}" />
+    <meta property="og:url" content="{url}" />
+    <meta property="og:image" content="{SITE_URL}{SHARE_IMAGE}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{SHARE_IMAGE_ALT}" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link
       rel="preload"
@@ -173,7 +198,7 @@ def chips(items, indent="              "):
 
 def page(name, title, desc, active, body):
     main = f'    <main id="main" tabindex="-1">\n{body}    </main>\n'
-    html = head(title, desc) + header(active) + main + FOOTER
+    html = head(name, title, desc) + header(active) + main + FOOTER
     (ROOT / name).write_text(html, encoding="utf-8", newline="\n")
     print("wrote", name)
 

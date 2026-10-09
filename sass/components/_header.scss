@@ -59,11 +59,15 @@
       line-height: 1.05;
     }
   }
-  &__links {
-    display: flex;
+  // On phones the menu button takes over. Hide the whole nav, not only its list,
+  // or screen readers still announce an empty "Main" navigation.
+  &__nav {
     @include respond(phone) {
       display: none;
     }
+  }
+  &__links {
+    display: flex;
   }
   &__link {
     @include type-nav;

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+  The 1200x630 preview card shown when a page of the site is shared (og:image).
+  It uses the site's own css/style.css, so run `npm run build` first if you changed tokens or fonts.
+  Then re-render it from the repo root in PowerShell (Microsoft Edge, its own throwaway profile):
+
+    $edge = "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+    Start-Process -Wait $edge '--headless', '--hide-scrollbars', '--window-size=1200,630', '--virtual-time-budget=3000', "--user-data-dir=$env:TEMP\kt-share-card", "--screenshot=$PWD\assets\png\share-card.png", "$PWD\tools\share-card.html"
+
+  LinkedIn caches previews: paste a page URL into https://www.linkedin.com/post-inspector/ to refresh it.
+  Every line of copy here also appears on the site; keep it that way.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Share card</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      .card {
+        box-sizing: border-box;
+        width: 1200px;
+        height: 630px;
+        padding: 64px 72px 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1;
+        background: var(--bg);
+      }
+
+      .card__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 48px;
+      }
+
+      .card__name {
+        margin: 0;
+        font-size: 84px;
+        font-weight: 800;
+        font-stretch: 125%;
+        line-height: 0.98;
+        text-transform: uppercase;
+        font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1, 'case' 1;
+      }
+
+      .card__sub {
+        margin: 22px 0 0;
+        font-size: 28px;
+        font-weight: 430;
+        line-height: 1.3;
+        color: var(--text-muted);
+      }
+
+      .card__photo {
+        flex: none;
+        width: 184px;
+        height: 184px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        object-fit: cover;
+        background: var(--surface-2);
+      }
+
+      /* The two figures sit in ledger rows: the claim on the left, the amount on the right. */
+      .ledger {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .ledger__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 48px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .ledger__label {
+        max-width: 740px;
+        font-size: 26px;
+        font-weight: 430;
+        line-height: 1.35;
+        text-wrap: balance;
+      }
+
+      .ledger__value {
+        font-size: 64px;
+        font-weight: 800;
+        font-stretch: 125%;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1, 'tnum' 1;
+      }
+
+      .ledger__value span {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card__top">
+        <div>
+          <h1 class="card__name">Konstantin<br />Tovshtein</h1>
+          <p class="card__sub">BBA, Simon Fraser University &middot; MIS and Accounting</p>
+        </div>
+        <img class="card__photo" src="../assets/png/konstantin-tovshtein.webp" width="320" height="320" alt="" />
+      </div>
+      <ul class="ledger">
+        <li class="ledger__row">
+          <span class="ledger__label">Lower system costs after my ProxySmart dashboard at Jetlink Solutions</span>
+          <span class="ledger__value">25<span>%</span></span>
+        </li>
+        <li class="ledger__row">
+          <span class="ledger__label">Above my assigned workload at Crowe MacKay</span>
+          <span class="ledger__value">10<span>%</span></span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

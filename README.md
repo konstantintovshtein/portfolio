@@ -18,10 +18,13 @@ Preview through a local server, for example `python -m http.server`, rather than
 
 Page content, the shared header and footer, and the contact form live in `tools/build_pages.py`. Edit them there; the `.html` files are generated.
 
-Two settings in that file:
+Settings in that file:
 
 - `FORMSPREE_ID`: your Formspree form ID, so the contact form can send messages.
 - Drop a résumé at `assets/Konstantin-Tovshtein-Resume.pdf` and rebuild to add "Download Résumé" buttons.
+- `SITE_URL`: the site's public address, used by the link-preview (`og:`) tags and canonical links. Change it if the site moves.
+
+When a page is shared on LinkedIn, Slack or iMessage, the preview shows `assets/png/share-card.png`. It is rendered from `tools/share-card.html`; the command to re-render it is at the top of that file.
 
 Theme colors live in `sass/abstracts/_theme.scss`. Type roles (sizes, weights, widths) live in `sass/abstracts/_type.scss`.
 
