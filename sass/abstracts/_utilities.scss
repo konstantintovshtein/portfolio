@@ -36,7 +36,7 @@
       background: $themeClrPrimary;
       left: 50%;
       transform: translateX(-50%);
-      border-radius: $commonBorderRadius;
+      border-radius: $radius-md;
 
       @include respond(phone) {
         top: calc(100% + 1.2rem);
@@ -75,7 +75,7 @@
   display: inline-block;
   text-align: center;
   border: 1px solid transparent;
-  border-radius: $commonBorderRadius;
+  border-radius: $radius-md;
   box-shadow: 0 8px 24px -8px rgb(var(--accent-btn-rgb) / 0.5);
   cursor: pointer;
   transition: background-color var(--transition), border-color var(--transition),

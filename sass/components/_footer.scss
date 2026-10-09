@@ -48,7 +48,7 @@
     justify-content: center;
     width: 4.4rem;
     height: 4.4rem;
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
     transition: background-color var(--transition);
 
     &:hover {
@@ -60,6 +60,7 @@
     display: block;
     width: 2.4rem;
     height: 2.4rem;
+    color: var(--text);
     opacity: 0.85;
     transition: opacity var(--transition);
   }

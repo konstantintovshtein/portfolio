@@ -31,7 +31,7 @@
   &__logo-img-cont {
     width: 5rem;
     height: 5rem;
-    border-radius: 50px;
+    border-radius: $radius-circle;
     overflow: hidden;
     margin-right: 1.5rem;
     background: var(--surface-2);

@@ -10,7 +10,7 @@
   &__item {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
     padding: 3rem 2.5rem;
     text-align: left;
   }

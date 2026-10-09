@@ -8,7 +8,7 @@
     @include type-chip;
     background: var(--surface-2);
     border: 1px solid var(--border);
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
     color: var(--text-muted);
   }
 }

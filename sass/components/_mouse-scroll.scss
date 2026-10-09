@@ -2,7 +2,7 @@
   width: 25px;
   height: 40px;
   border: 2px solid var(--border);
-  border-radius: 60px;
+  border-radius: $radius-pill;
   position: relative;
   overflow: hidden;
   &::before {
@@ -14,7 +14,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--text-muted);
-    border-radius: 50%;
+    border-radius: $radius-circle;
     opacity: 1;
     // Plays three times as a hint, then rests.
     animation: wheel 1.3s ease-out 3;

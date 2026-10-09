@@ -62,7 +62,10 @@
   }
 
   &__social-icon {
+    display: block;
     width: 100%;
+    height: auto;
+    color: var(--text);
   }
 
   &__content {
@@ -123,7 +126,7 @@
     max-width: 80rem;
     text-align: right;
     width: 95%;
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
 
     margin: 5rem auto 0 auto;
     @include respond(phone) {
@@ -151,7 +154,7 @@
     width: 100%;
     border: 1px solid var(--border);
     background: var(--surface-2);
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
     transition: border-color var(--transition);
 
     &:focus,

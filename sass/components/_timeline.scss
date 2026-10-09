@@ -22,7 +22,7 @@
     position: relative;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: $commonBorderRadius;
+    border-radius: $radius-md;
     padding: 3.5rem;
     margin-bottom: 3rem;
     transition: border-color var(--transition);
@@ -42,7 +42,7 @@
       top: 4rem;
       width: 1.6rem;
       height: 1.6rem;
-      border-radius: 50%;
+      border-radius: $radius-circle;
       background: var(--bg);
       border: 3px solid var(--accent);
 

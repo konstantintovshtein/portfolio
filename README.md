@@ -26,6 +26,8 @@ Settings in that file:
 
 When a page is shared on LinkedIn, Slack or iMessage, the preview shows `assets/png/share-card.png`. It is rendered from `tools/share-card.html`; the command to re-render it is at the top of that file.
 
+The favicon is `assets/svg/favicon.svg`: "KT" drawn from KT Sans' own outlines on Ledger Blue Deep. `assets/png/favicon-32.png` and `assets/png/apple-touch-icon.png` are PNG copies of it for browsers and iOS.
+
 Theme colors live in `sass/abstracts/_theme.scss`. Type roles (sizes, weights, widths) live in `sass/abstracts/_type.scss`.
 
 ## Credits and license

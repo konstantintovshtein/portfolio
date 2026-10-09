@@ -1,3 +1,8 @@
 $themeClrPrimary: var(--accent);
 
-$commonBorderRadius: 8px;
+// Corner radii (DESIGN.md "Shapes"): 8px panels, cards, buttons, fields and chips;
+// full pills for badges and the scroll capsule; circles for the avatar and dots; 4px focus rings.
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-pill: 999px;
+$radius-circle: 50%;
