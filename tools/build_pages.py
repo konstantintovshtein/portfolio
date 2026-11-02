@@ -216,10 +216,13 @@ ROLES = [
         "case": "./one-pay.html",
         "links": [("One Pay website", ONE_PAY_SITE)],
     },
+    # Titles, dates and places below follow the Fall 2026 résumé (assets/Konstantin-Tovshtein-Resume.pdf).
     {
         "mark": "JS",
         "org": "Jetlink Solutions",
-        "role": "Technical Support Specialist and Data Analyst",
+        "role": "Project Coordinator",
+        "when": "May 2025 &ndash; Dec 2025",
+        "where": "Vancouver, BC",
         "meta": "IT support &middot; Data analysis",
         "points": [
             "Resolved hardware and software issues for staff quickly so work kept moving.",
@@ -230,9 +233,40 @@ ROLES = [
         "case": "./jetlink.html",
     },
     {
+        "mark": "BRP",
+        "org": "BRP Powersports Export",
+        "role": "Project Coordinator",
+        "when": "May 2024 &ndash; May 2025",
+        "where": "Vancouver, BC",
+        "meta": "International equipment exports",
+        "points": [
+            "Managed end-to-end supply chain documentation for international equipment exports, tracking delivery timelines and compliance.",
+            "Coordinated external vendors and logistics partners, reconciling shipping costs and tracking project travel and transportation expenses.",
+            "Delivered recreational vehicles on time to <strong>over 10 clients</strong>.",
+        ],
+    },
+    {
+        "mark": "ME",
+        "org": "Medusa Events",
+        "role": "Event Manager",
+        "when": "Aug 2023 &ndash; Present",
+        "where": "Vancouver, BC",
+        "meta": "Nightlife and themed social events",
+        "points": [
+            "Co-founded the company with three equal partners and run it alongside my studies.",
+            "Write marketing copy and design promotional graphics in <strong>Canva</strong> and <strong>Figma</strong>.",
+            "Use generative AI tools like <strong>Higgsfield</strong> and <strong>Gemini</strong> for event marketing.",
+            "Handle vendor negotiations, venue logistics and the revenue distribution framework between partners.",
+        ],
+        "tools": ["Canva", "Figma", "Higgsfield", "Gemini", "Asana", "Excel"],
+        "case": "./medusa-events.html",
+    },
+    {
         "mark": "RA",
         "org": "Repatt AI",
-        "role": "Database Automation and Sales Outreach",
+        "role": "Sales and Growth Specialist",
+        "when": "Mar 2026 &ndash; Apr 2026",
+        "where": "Vancouver, BC",
         "meta": "AI startup &middot; Lead generation",
         "points": [
             "Wrote <strong>Python</strong> scripts that extracted business data from Google Maps into Excel spreadsheets.",
@@ -243,7 +277,9 @@ ROLES = [
     {
         "mark": "CM",
         "org": "Crowe MacKay",
-        "role": "Accounting Assistant",
+        "role": "Staff Accountant",
+        "when": "Jan 2024 &ndash; May 2024",
+        "where": "Surrey, BC",
         "meta": "Public accounting",
         "points": [
             "Reviewed corporate financial ledgers.",
@@ -253,18 +289,15 @@ ROLES = [
         "tools": ["Excel", "QuickBooks", "Financial reporting"],
     },
     {
-        "mark": "ME",
-        "org": "Medusa Events",
-        "role": "Co-Founder",
-        "meta": "Nightlife and themed social events &middot; Vancouver",
+        "mark": "EA",
+        "org": "Esports Association",
+        "role": "External Relations Coordinator",
+        "when": "Sep 2023 &ndash; Jul 2024",
+        "where": "Burnaby, BC",
+        "meta": "University esports",
         "points": [
-            "Co-founded the company with three equal partners and run it alongside my studies.",
-            "Write marketing copy and design promotional graphics in <strong>Canva</strong> and <strong>Figma</strong>.",
-            "Use generative AI tools like <strong>Higgsfield</strong> and <strong>Gemini</strong> for event marketing.",
-            "Handle vendor negotiations, venue logistics and the revenue distribution framework between partners.",
+            "Organized esports competitions and secured sponsorships with <strong>DrunkDeer</strong> and <strong>Red Bull</strong> for a university gaming lounge.",
         ],
-        "tools": ["Canva", "Figma", "Higgsfield", "Gemini", "Asana", "Excel"],
-        "case": "./medusa-events.html",
     },
 ]
 
@@ -273,7 +306,9 @@ EDUCATION = [
         "mark": "SFU",
         "org": "Simon Fraser University",
         "role": "Bachelor of Business Administration",
-        "meta": "Fourth year &middot; Burnaby, BC",
+        "when": "Expected Spring 2027",
+        "where": "Burnaby, BC",
+        "meta": "Fourth year &middot; Articling CPA student",
         "points": [
             "Concentrations in <strong>Management Information Systems</strong> and <strong>Accounting</strong>, with a minor in <strong>Computer Science</strong>.",
         ],
@@ -407,13 +442,15 @@ def entry(r):
         links += f'\n              <a href="{r["case"]}" class="text-link">Read the case study &rarr;</a>'
     links += ext_links(r.get("links", []), "              ")
     links_block = f'\n            <div class="entry__links">{links}\n            </div>' if links else ""
+    when = "".join(f"\n                <p>{r[k]}</p>" for k in ("when", "where") if r.get(k))
+    when_block = f'\n              <div class="entry__when">{when}\n              </div>' if when else ""
     return f"""          <article class="entry">
             <div class="entry__head">
               <span class="entry__logo" aria-hidden="true">{r["mark"]}</span>
-              <div>
+              <div class="entry__titles">
                 <h3 class="entry__role">{r["role"]}</h3>
                 <p class="entry__org">{r["org"]}</p>{meta}
-              </div>
+              </div>{when_block}
             </div>
             <ul class="entry__points">{points}
             </ul>{skills}{links_block}
@@ -638,7 +675,7 @@ def case_study(name, title, sub, sections, tools, back, desc, image=None, links=
 
 case_study(
     "medusa-events.html",
-    "Co-Founder &mdash; Medusa Events",
+    "Event Manager &mdash; Medusa Events",
     "Nightlife and themed social events in Vancouver, run by four equal partners with no external funding.",
     [
         (
@@ -721,13 +758,13 @@ case_study(
 
 case_study(
     "jetlink.html",
-    "Data Analyst &mdash; Jetlink Solutions",
+    "Project Coordinator &mdash; Jetlink Solutions",
     "Fixing problems day to day, then building ProxySmart, the monitoring dashboard that helped cut system costs by 25%.",
     [
         (
             "Overview",
             [
-                "At Jetlink Solutions I worked as a technical support specialist and data analyst. Day to day I handled hardware and software issues and resolved them promptly so the team could keep working.",
+                "At Jetlink Solutions I worked as a project coordinator. Day to day I handled hardware and software issues and resolved them promptly so the team could keep working.",
             ],
         ),
         (

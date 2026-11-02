@@ -14,8 +14,36 @@
 
   &__head {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
-    gap: 1.8rem;
+    gap: 0.4rem 1.8rem;
+  }
+
+  &__titles {
+    flex: 1;
+    min-width: 0;
+  }
+
+  // Dates and place: a right-hand column on wide screens, a line under the titles on phones.
+  &__when {
+    @include type-meta;
+    color: var(--text-dim);
+    text-align: right;
+    white-space: nowrap;
+
+    @include respond(phone) {
+      flex-basis: 100%;
+      padding-left: 6.6rem; // logo width + gap, so it lines up with the role
+      text-align: left;
+
+      p {
+        display: inline;
+      }
+
+      p + p::before {
+        content: ' \00b7  ';
+      }
+    }
   }
 
   &__logo {
