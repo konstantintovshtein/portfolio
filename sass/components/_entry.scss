@@ -1,0 +1,87 @@
+// One experience or education row: monogram, role and organisation, then the points.
+.entry {
+  padding-bottom: 2.8rem;
+  border-bottom: 1px solid var(--line);
+
+  & + & {
+    padding-top: 2.8rem;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.8rem;
+  }
+
+  &__logo {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 5.6rem;
+    height: 5.6rem;
+    border: 1px solid rgb(var(--accent-rgb) / 0.3);
+    border-radius: 1rem;
+    background: rgb(var(--accent-btn-rgb) / 0.14);
+    color: var(--accent-mist);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    @include respond(phone) {
+      width: 4.8rem;
+      height: 4.8rem;
+      font-size: 1.35rem;
+    }
+  }
+
+  &__role {
+    @include type-title;
+    font-size: 1.7rem;
+    color: var(--text);
+  }
+
+  &__org {
+    @include type-small;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+  }
+
+  &__meta {
+    @include type-meta;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+  }
+
+  &__points {
+    margin: 1.6rem 0 1.2rem;
+    padding-left: 2rem;
+
+    li {
+      @include type-body;
+      list-style: disc;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+
+      &::marker {
+        color: var(--text-dim);
+      }
+    }
+  }
+
+  &__skills {
+    @include type-meta;
+    color: var(--text-dim);
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2.4rem;
+    margin-top: 0.4rem;
+  }
+}

@@ -1,229 +1,171 @@
-.home-hero {
-  color: var(--text);
-  background: radial-gradient(
-      ellipse at top,
-      rgb(var(--accent-btn-rgb) / 0.22),
-      transparent 60%
-    ),
-    var(--bg);
-  background-position: center;
-
-  height: 100vh;
-
-  min-height: 80rem;
-  max-height: 120rem;
+.hero {
   position: relative;
-
-  @include respond(phone) {
-    height: unset;
-    min-height: unset;
-  }
-
-  &__socials {
-    position: absolute;
-    top: 50%;
-    border: 1px solid var(--border);
-    border-left: 0;
-    background: var(--surface);
-    transform: translateY(-50%);
-    @include respond(tab-port) {
-      display: none;
-    }
-  }
-  &__mouse-scroll-cont {
-    position: absolute;
-    bottom: 3%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    @include respond(phone) {
-      display: none;
-    }
-  }
-
-  &__social {
-    width: 5rem;
-  }
-
-  &__social-icon-link {
-    width: 100%;
-    display: block;
-    padding: 1.2rem;
-    border-bottom: 1px solid var(--border);
-    transition: background-color var(--transition);
-
-    &:hover {
-      background: var(--surface-2);
-    }
-
-    &--bd-none {
-      border-bottom: 0;
-    }
-  }
-
-  &__social-icon {
-    display: block;
-    width: 100%;
-    height: auto;
-    color: var(--text);
-  }
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 2rem) 1.6rem 8rem;
+  text-align: center;
 
   &__content {
+    max-width: 96rem;
+  }
+
+  // A light-to-blue band that slides across the name; one full period every 8s.
+  &__name {
+    @include type-display;
+    margin-bottom: 1.6rem;
+    background-image: linear-gradient(
+      90deg,
+      #eff6ff 0%,
+      #93c5fd 12.5%,
+      #3b82f6 25%,
+      #93c5fd 37.5%,
+      #eff6ff 50%,
+      #93c5fd 62.5%,
+      #3b82f6 75%,
+      #93c5fd 87.5%,
+      #eff6ff 100%
+    );
+    background-size: 200% 100%;
+    background-position: 100% 50%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: name-wave 8s linear infinite;
+  }
+
+  &__sub {
+    @include type-lead;
+    color: var(--text-muted);
+  }
+
+  &__arrow {
     position: absolute;
-    top: 50%;
+    bottom: 2.4rem;
     left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 90rem;
-    width: 92%;
+    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    color: rgb(255 255 255 / 0.6);
+    opacity: 0;
+    animation: arrow-in 0.6s ease 1.2s forwards;
+    transition: color var(--transition);
 
-    @include respond(phone) {
-      padding: 19rem 0 13rem 0;
-      margin: auto;
-      position: static;
-      transform: translate(0, 0);
+    &:hover {
+      color: rgb(255 255 255 / 0.95);
     }
   }
 
-  &__info {
-    margin: 3rem auto 0 auto;
-    max-width: 80rem;
-  }
-  &__cta {
-    margin-top: 5rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-
-    .btn {
-      padding: 1.5rem 4.5rem;
-    }
-  }
-
-  &__eyebrow {
-    @include type-label;
-    display: block;
-    text-align: center;
-    color: var(--accent-mist);
-    margin-bottom: 2.5rem;
+  &__arrow-icon {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid currentColor;
   }
 }
 
-
-.contact {
-  background: radial-gradient(
-      ellipse at bottom,
-      rgb(var(--accent-btn-rgb) / 0.18),
-      transparent 60%
-    ),
-    var(--bg);
-
-  &__form-container {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 4rem;
-    margin-top: 6rem;
-    max-width: 80rem;
-    text-align: right;
-    width: 95%;
-    border-radius: $radius-md;
-
-    margin: 5rem auto 0 auto;
-    @include respond(phone) {
-      padding: 3rem;
-    }
+@keyframes name-wave {
+  to {
+    background-position: 0% 50%;
   }
-  &__form-field {
-    margin-bottom: 4rem;
-    @include respond(phone) {
-      margin-bottom: 3rem;
-    }
-  }
-  &__form-label {
-    @include type-field-label;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    display: block;
-    text-align: left;
-  }
-  &__form-input {
-    @include type-input;
-    color: var(--text);
-    caret-color: var(--accent);
-    padding: 2rem;
-    width: 100%;
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    border-radius: $radius-md;
-    transition: border-color var(--transition);
+}
 
-    &:focus,
-    &:focus-visible {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.25);
-    }
-    &::placeholder {
-      color: var(--text-muted);
-      font-weight: 400;
-      opacity: 1;
-    }
+@keyframes arrow-in {
+  to {
+    opacity: 1;
   }
-  &__actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+}
 
-    @include respond(phone) {
-      flex-direction: column-reverse;
-      align-items: stretch;
-    }
-  }
+.intro {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
 
-  &__status {
-    @include type-small;
+  &__text {
     flex: 1;
-    margin: 0;
-    text-align: left;
+    min-width: 0;
+  }
+
+  &__lead {
+    @include type-lead;
     color: var(--text-muted);
-
-    &:empty {
-      display: none;
-    }
-
-    &[data-state='success'] {
-      color: var(--accent-mist);
-    }
-
-    &[data-state='error'] {
-      color: var(--danger);
-    }
+    margin-bottom: 2.4rem;
   }
 
-  &__btn {
-    margin-left: auto;
-    padding: 2rem 4rem;
+  &__photo {
+    flex: none;
+    width: 14rem;
+    height: 14rem;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    border-radius: $radius-lg;
+    filter: grayscale(30%) contrast(0.95);
+  }
 
-    @include respond(phone) {
-      width: 100%;
+  @include respond(phone) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 2.4rem;
+
+    &__photo {
+      width: 11rem;
+      height: 11rem;
     }
   }
+}
 
-  &__honeypot {
-    display: none;
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.8rem 3.6rem;
+
+  @include respond(phone) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skill-group__title {
+  @include type-kicker;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.note {
+  @include type-body;
+  max-width: $measure;
+  margin-top: 3.2rem;
+  color: var(--text-muted);
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+
+  @include respond(phone) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mini {
+  @include glass;
+  padding: 2.2rem 2.4rem;
+  border-radius: $radius-md;
+
+  &__title {
+    @include type-title;
+    font-size: 1.7rem;
+    color: var(--text);
+    margin-bottom: 0.8rem;
   }
 
-  &__alt {
-    @include type-small;
-    margin-top: 2.5rem;
-    text-align: left;
+  &__desc {
+    @include type-body;
     color: var(--text-muted);
-
-    a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-underline-offset: 0.4rem;
-    }
   }
 }

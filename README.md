@@ -10,7 +10,7 @@ Static HTML and SCSS, no framework. Open `index.html` in a browser to view it.
 npm install
 npm run watch:scss   # recompile css/style.css while editing
 npm run build        # compile, autoprefix and minify css/style.css
-npm run build:html   # regenerate the eight pages from tools/build_pages.py
+npm run build:html   # regenerate the six pages from tools/build_pages.py
 npm run build:font   # rebuild assets/fonts/kt-sans-latin-var.woff2 (needs: pip install fonttools brotli)
 ```
 

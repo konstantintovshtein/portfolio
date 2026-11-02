@@ -1,4 +1,4 @@
-"""Generate the eight portfolio HTML pages from one shared head, header and footer.
+"""Generate the portfolio's HTML pages from one shared head, header and footer.
 
 Usage (from the repo root): npm run build:html
                         or: python tools/build_pages.py
@@ -6,6 +6,7 @@ Usage (from the repo root): npm run build:html
 Edit page content in this file, never in the generated .html files: the next build overwrites them.
 """
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent
@@ -14,7 +15,7 @@ ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().pare
 # Until it is set, the form shows a "not connected yet" message instead of sending.
 FORMSPREE_ID = "YOUR_FORM_ID"
 
-# Drop your résumé at this path and rebuild: "Download résumé" buttons appear automatically.
+# Drop your résumé at this path and rebuild: a "Résumé" nav link and intro button appear automatically.
 RESUME = "assets/Konstantin-Tovshtein-Resume.pdf"
 HAS_RESUME = (ROOT / RESUME).exists()
 
@@ -31,9 +32,8 @@ SHARE_IMAGE_ALT = (
 
 NAV = [
     ("home", "./index.html", "Home"),
-    ("about", "./about.html", "About"),
-    ("experience", "./experience.html", "Experience"),
     ("projects", "./projects.html", "Projects"),
+    *([("resume", f"./{RESUME}", "Résumé")] if HAS_RESUME else []),
     ("contact", "./index.html#contact", "Contact"),
 ]
 
@@ -42,6 +42,7 @@ GITHUB = "https://github.com/konstantintovshtein?tab=repositories"
 CORESHARE_REPO = "https://github.com/konstantintovshtein/coreshare"
 CORESHARE_TEAM_REPO = "https://github.com/borodooovitsyn/coreshare"
 TEAM_BADGE = '<span class="badge"><svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Team project</span>'
+RESUME_ICON = '<svg class="pill__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 2.75h8.5L19 7.25v14H6z"/><path d="M14 2.75v5h5M9 12.5h6M9 16h6"/></svg>'
 
 # Brand marks drawn in the text colour, so they stay sharp at any size. Paths: Simple Icons (CC0).
 SOCIAL_ICONS = {
@@ -66,24 +67,31 @@ def social_icon(name, cls, size):
 
 TABLEAU_BEEDIE = "https://public.tableau.com/app/profile/konstantin.tovshtein/viz/BusinessAnalyticsHackathon/Dashboard"
 ONE_PAY_SITE = "https://onepayltd.kz/ru"
+PROXYSMART_IMG = "./assets/jpeg/jetlink-proxysmart-dashboard.webp"
 
 
-def ext_links(links, indent, cls="btn btn--med btn--theme-inv"):
+def ext_links(links, indent, cls="text-link"):
     return "".join(
         f'\n{indent}<a href="{url}" class="{cls}" target="_blank" rel="noopener noreferrer">{label}</a>'
         for label, url in links
     )
 
 
-def head(name, title, desc):
+def srcset(src):
+    # Smaller copies sit next to the original as name-800.webp etc.; list the ones that exist.
+    stem = src.removesuffix(".webp")
+    widths = [w for w in (800, 1280, 1920) if (ROOT / f"{stem}-{w}.webp").exists()]
+    return ", ".join([f"{stem}-{w}.webp {w}w" for w in widths] + [f"{src} 2505w"])
+
+
+def head(name, title, desc, cls):
     url = SITE_URL if name == "index.html" else SITE_URL + name
     return f"""<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#05070c" />
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content="{desc}" />
@@ -112,10 +120,12 @@ def head(name, title, desc):
       type="font/woff2"
       crossorigin
     />
+    <script>document.documentElement.classList.add('js')</script>
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
+  <body class="{cls}">
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-bg" aria-hidden="true"><canvas class="page-bg__streaks"></canvas></div>
 """
 
 
@@ -123,62 +133,16 @@ def header(active):
     def cur(key):
         return ' aria-current="page"' if key == active else ""
 
-    desktop = "\n".join(
-        f'            <li class="header__link-wrapper">\n'
-        f'              <a href="{href}" class="header__link"{cur(key)}>{label}</a>\n'
-        f"            </li>"
+    links = "\n".join(
+        f'          <li><a href="{href}" class="nav__link"{cur(key)}>{label}</a></li>'
         for key, href, label in NAV
     )
-    mobile = "\n".join(
-        f'            <li class="header__sm-menu-link">\n'
-        f'              <a href="{href}"{cur(key)}>{label}</a>\n'
-        f"            </li>"
-        for key, href, label in NAV
-    )
-    return f"""    <header class="header">
-      <div class="header__content">
-        <a href="./index.html" class="header__logo-container">
-          <div class="header__logo-img-cont">
-            <img
-              src="./assets/png/konstantin-tovshtein.webp"
-              width="320"
-              height="320"
-              alt=""
-              class="header__logo-img"
-            />
-          </div>
-          <span class="header__logo-sub">Konstantin Tovshtein</span>
-        </a>
-        <div class="header__main">
-          <nav class="header__nav" aria-label="Main">
-            <ul class="header__links">
-{desktop}
-            </ul>
-          </nav>
-          <button
-            type="button"
-            class="header__main-ham-menu-cont"
-            aria-label="Open menu"
-            aria-expanded="false"
-            aria-controls="mobile-menu"
-          >
-            <img
-              src="./assets/svg/ham-menu.svg"
-              alt=""
-              class="header__main-ham-menu"
-            />
-            <img
-              src="./assets/svg/ham-menu-close.svg"
-              alt=""
-              class="header__main-ham-menu-close d-none"
-            />
-          </button>
-        </div>
-      </div>
-      <div class="header__sm-menu" id="mobile-menu">
-        <nav class="header__sm-menu-content" aria-label="Main">
-          <ul class="header__sm-menu-links">
-{mobile}
+    return f"""    <header class="nav">
+      <div class="nav__inner">
+        <a href="./index.html" class="nav__logo">Konstantin Tovshtein</a>
+        <nav aria-label="Main">
+          <ul class="nav__links">
+{links}
           </ul>
         </nav>
       </div>
@@ -186,28 +150,8 @@ def header(active):
 """
 
 
-FOOTER = f"""    <footer class="main-footer">
-      <div class="main-container">
-        <div class="main-footer__upper">
-          <div class="main-footer__row main-footer__row-1">
-            <h2 class="heading heading-sm main-footer__heading-sm">Social</h2>
-            <div class="main-footer__social-cont">
-              <a class="main-footer__social" href="{LINKEDIN}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-                {social_icon("linkedin", "main-footer__icon", 24)}
-              </a>
-              <a class="main-footer__social" href="{GITHUB}" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">
-                {social_icon("github", "main-footer__icon", 24)}
-              </a>
-            </div>
-          </div>
-          <div class="main-footer__row main-footer__row-2">
-            <h2 class="heading heading-sm">Konstantin Tovshtein</h2>
-            <p class="main-footer__short-desc">
-              BBA student at Simon Fraser University studying Management Information Systems and Accounting, with a minor in Computer Science. Based in Vancouver, BC.
-            </p>
-          </div>
-        </div>
-      </div>
+FOOTER = f"""    <footer class="footer">
+      <p>&copy; {date.today().year} Konstantin Tovshtein</p>
     </footer>
 
     <script src="./assets/vendor/lenis/lenis.min.js"></script>
@@ -217,23 +161,23 @@ FOOTER = f"""    <footer class="main-footer">
 """
 
 
-def chips(items, indent="              "):
-    inner = "\n".join(f'{indent}  <div class="skills__skill">{i}</div>' for i in items)
-    return f'{indent}<div class="skills">\n{inner}\n{indent}</div>'
+def tags(items, indent):
+    inner = "\n".join(f'{indent}  <li class="tag">{i}</li>' for i in items)
+    return f'{indent}<ul class="tags">\n{inner}\n{indent}</ul>'
 
 
-def page(name, title, desc, active, body):
+def page(name, title, desc, active, cls, body):
     main = f'    <main id="main" tabindex="-1">\n{body}    </main>\n'
-    html = head(name, title, desc) + header(active) + main + FOOTER
+    html = head(name, title, desc, cls) + header(active) + main + FOOTER
     (ROOT / name).write_text(html, encoding="utf-8", newline="\n")
     print("wrote", name)
 
 
-def page_hero(title, sub):
-    return f"""    <section class="page-hero">
-      <div class="main-container">
-        <h1 class="heading-primary">{title}</h1>
-        <p class="page-hero__sub">{sub}</p>
+def section(key, title, inner, extra=""):
+    return f"""    <section class="section reveal" id="{key}" aria-labelledby="{key}-title">
+      <div class="container">
+        <h2 class="section-title" id="{key}-title" data-type>{title}</h2>
+{inner}{extra}
       </div>
     </section>
 """
@@ -243,6 +187,7 @@ def page_hero(title, sub):
 
 ROLES = [
     {
+        "mark": "OP",
         "org": "One Pay Ltd",
         "role": "Compliance and Engineering Support",
         "meta": "Payment processing &middot; PCI DSS and Visa certification",
@@ -255,6 +200,7 @@ ROLES = [
         "links": [("One Pay website", ONE_PAY_SITE)],
     },
     {
+        "mark": "JS",
         "org": "Jetlink Solutions",
         "role": "Technical Support Specialist and Data Analyst",
         "meta": "IT support &middot; Data analysis",
@@ -267,6 +213,7 @@ ROLES = [
         "case": "./jetlink.html",
     },
     {
+        "mark": "RA",
         "org": "Repatt AI",
         "role": "Database Automation and Sales Outreach",
         "meta": "AI startup &middot; Lead generation",
@@ -275,9 +222,9 @@ ROLES = [
             "Turned that data into customer leads and ran business sales outreach.",
         ],
         "tools": ["Python", "Excel", "Automation"],
-        "case": None,
     },
     {
+        "mark": "CM",
         "org": "Crowe MacKay",
         "role": "Accounting Assistant",
         "meta": "Public accounting",
@@ -287,9 +234,9 @@ ROLES = [
             "Completed <strong>10% more</strong> work than my assigned target.",
         ],
         "tools": ["Excel", "QuickBooks", "Financial reporting"],
-        "case": None,
     },
     {
+        "mark": "ME",
         "org": "Medusa Events",
         "role": "Co-Founder",
         "meta": "Nightlife and themed social events &middot; Vancouver",
@@ -304,318 +251,78 @@ ROLES = [
     },
 ]
 
+EDUCATION = [
+    {
+        "mark": "SFU",
+        "org": "Simon Fraser University",
+        "role": "Bachelor of Business Administration",
+        "meta": "Fourth year &middot; Burnaby, BC",
+        "points": [
+            "Concentrations in <strong>Management Information Systems</strong> and <strong>Accounting</strong>, with a minor in <strong>Computer Science</strong>.",
+        ],
+    },
+    {
+        "mark": "FIC",
+        "org": "Fraser International College",
+        "role": "Pathway to Simon Fraser University",
+        "points": [
+            "Mentored first-year international students as they settled into university life.",
+        ],
+    },
+]
+
+CATEGORIES = [
+    ("hackathons", "Hackathons"),
+    ("work", "Work"),
+    ("course", "Course projects"),
+]
+
 PROJECTS = [
     {
+        "category": "hackathons",
+        "featured": True,
         "eyebrow": "Hackathon &middot; StormHacks 2026",
         "title": "CoreShare: GPU sharing marketplace",
         "team": True,
         "desc": "Our team built a marketplace that rents idle GPUs to people who need compute, with owners paid in SOL per minute of measured usage. My part: full-stack work on the web and desktop apps, plus the Solana wallet sign-in and Devnet payouts.",
         "tools": ["Next.js", "Electron", "FastAPI", "Python", "Docker", "Solana"],
         "case": "./stormhacks-gpu.html",
-        "links": [("Team repo on GitHub", CORESHARE_TEAM_REPO)],
-        "featured": True,
     },
     {
+        "category": "work",
+        "featured": True,
+        "eyebrow": "Work &middot; Jetlink Solutions",
+        "title": "ProxySmart dashboard",
+        "desc": "A custom dashboard that tracks JetLink Canada&rsquo;s proxy servers, devices and ports, refreshing every 15 minutes. It helped management cut system costs by 25%.",
+        "tools": ["Dashboard design", "Data analysis"],
+        "case": "./jetlink.html",
+        "image": PROXYSMART_IMG,
+    },
+    {
+        "category": "hackathons",
+        "featured": True,
         "eyebrow": "Hackathon &middot; Beedie Business Analytics",
-        "team": True,
-        "links": [("View Tableau dashboard", TABLEAU_BEEDIE)],
         "title": "Business analytics hackathon",
+        "team": True,
         "desc": "Our team cleaned dense datasets and presented our data models in Tableau.",
         "tools": ["Tableau", "Data cleaning", "Data modelling"],
-        "case": None,
+        "link": TABLEAU_BEEDIE,
     },
     {
+        "category": "course",
         "eyebrow": "Business case &middot; Course project",
         "title": "Aegis Atmosphere market expansion",
         "desc": "A research report and presentation on expanding hospital-grade air purification into Iran and Vietnam. I structured the presentation with the PACADI case framework.",
         "tools": ["Market research", "PACADI", "PowerPoint"],
-        "case": None,
     },
     {
+        "category": "course",
         "eyebrow": "Database design &middot; Course project",
         "title": "TEMU database model",
         "desc": "A relational database model of an e-commerce marketplace. I wrote the SQL queries with help from GitHub Copilot.",
         "tools": ["SQL", "Database design", "GitHub Copilot"],
-        "case": None,
     },
 ]
-
-
-def project_card(p, heading="h3"):
-    cls = "card card--featured" if p.get("featured") else "card"
-    btns = ""
-    if p["case"]:
-        btns += f'\n                <a href="{p["case"]}" class="btn btn--med btn--theme">Case Study</a>'
-    btns += ext_links(p.get("links", []), "                ")
-    action = (
-        f'\n              <div class="card__actions">{btns}\n              </div>'
-        if btns
-        else "\n              <!-- TODO: add a GitHub / Devpost / demo link here when available -->"
-    )
-    return f"""            <article class="{cls}">
-              <div class="card__top">
-                <p class="card__eyebrow">{p["eyebrow"]}</p>{TEAM_BADGE if p.get("team") else ""}
-              </div>
-              <{heading} class="card__title">{p["title"]}</{heading}>
-              <p class="card__desc">{p["desc"]}</p>
-{chips(p["tools"])}{action}
-            </article>"""
-
-
-# ---------------------------------------------------------------- index
-
-RESUME_BUTTON = (
-    f'\n          <a href="./{RESUME}" class="btn btn--theme-inv" download>Download Résumé</a>'
-    if HAS_RESUME
-    else ""
-)
-
-hero_socials = f"""      <div class="home-hero__socials">
-        <div class="home-hero__social">
-          <a href="{LINKEDIN}" class="home-hero__social-icon-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-            {social_icon("linkedin", "home-hero__social-icon", 26)}
-          </a>
-        </div>
-        <div class="home-hero__social">
-          <a href="{GITHUB}" class="home-hero__social-icon-link home-hero__social-icon-link--bd-none" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">
-            {social_icon("github", "home-hero__social-icon", 26)}
-          </a>
-        </div>
-      </div>
-"""
-
-contact = f"""    <section id="contact" class="contact sec-pad" aria-labelledby="contact-title">
-      <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-med" id="contact-title">
-          <span class="heading-sec__main heading-sec__main--lt">Contact</span>
-          <span class="heading-sec__sub heading-sec__sub--lt">
-            Open to roles, contracts, or conversations about interesting work.
-          </span>
-        </h2>
-        <div class="contact__form-container">
-          <form
-            action="https://formspree.io/f/{FORMSPREE_ID}"
-            method="POST"
-            class="contact__form"
-            data-contact-form
-          >
-            <div class="contact__form-field">
-              <label class="contact__form-label" for="name">Name</label>
-              <input
-                required
-                placeholder="Enter Your Name"
-                type="text"
-                autocomplete="name"
-                class="contact__form-input"
-                name="name"
-                id="name"
-              />
-            </div>
-            <div class="contact__form-field">
-              <label class="contact__form-label" for="email">Email</label>
-              <input
-                required
-                placeholder="Enter Your Email"
-                type="email"
-                autocomplete="email"
-                class="contact__form-input"
-                name="email"
-                id="email"
-              />
-            </div>
-            <div class="contact__form-field">
-              <label class="contact__form-label" for="message">Message</label>
-              <textarea
-                data-lenis-prevent
-                required
-                cols="30"
-                rows="10"
-                class="contact__form-input"
-                placeholder="Enter Your Message"
-                name="message"
-                id="message"
-              ></textarea>
-            </div>
-            <input type="text" name="_gotcha" class="contact__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <div class="contact__actions">
-              <p class="contact__status" role="status" data-contact-status></p>
-              <button type="submit" class="btn btn--theme contact__btn">Send Message</button>
-            </div>
-          </form>
-          <p class="contact__alt">
-            Prefer LinkedIn?
-            <a href="{LINKEDIN}" target="_blank" rel="noopener noreferrer">Message me there</a>.
-          </p>
-        </div>
-      </div>
-    </section>
-"""
-
-featured_roles = [ROLES[0], ROLES[1], ROLES[4]]
-role_cards = "\n".join(
-    f"""            <article class="card">
-              <p class="card__eyebrow">{r["org"]}</p>
-              <h3 class="card__title">{r["role"]}</h3>
-              <p class="card__desc">{r["points"][-1] if r["org"] == "Jetlink Solutions" else r["points"][0]}</p>
-              <div class="card__actions">
-                <a href="{r["case"]}" class="text-link">Read the case study &rarr;</a>
-              </div>
-            </article>"""
-    for r in featured_roles
-)
-
-index_body = f"""    <section class="home-hero">
-      <div class="home-hero__content">
-        <span class="home-hero__eyebrow">MIS &middot; Accounting &middot; Computer Science</span>
-        <h1 class="heading-primary">Hey, I'm <span class="heading-primary__name">Konstantin Tovshtein</span></h1>
-        <div class="home-hero__info">
-          <p class="text-primary">
-            A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. Next stop, a career in fintech.
-          </p>
-        </div>
-        <div class="home-hero__cta">
-          <a href="./experience.html" class="btn btn--theme">View Experience</a>
-          <a href="./projects.html" class="btn btn--theme-inv">See Projects</a>{RESUME_BUTTON}
-        </div>
-      </div>
-{hero_socials}      <div class="home-hero__mouse-scroll-cont">
-        <div class="mouse"></div>
-      </div>
-    </section>
-    <section class="sec-pad" aria-labelledby="glance-title">
-      <div class="main-container">
-        <div class="section-head">
-          <div>
-            <h2 class="section-head__title" id="glance-title">At a glance</h2>
-            <p class="section-head__sub">A few numbers from the work so far.</p>
-          </div>
-          <a href="./about.html" class="text-link">More about me &rarr;</a>
-        </div>
-        <div class="stats">
-          <div class="stats__item">
-            <span class="stats__value">25<span>%</span></span>
-            <span class="stats__label">Lower system costs after my ProxySmart dashboard at Jetlink Solutions</span>
-          </div>
-          <div class="stats__item">
-            <span class="stats__value">10<span>%</span></span>
-            <span class="stats__label">Above my assigned workload at Crowe MacKay</span>
-          </div>
-          <div class="stats__item">
-            <span class="stats__value">5</span>
-            <span class="stats__label">Roles across fintech, accounting, AI and events</span>
-          </div>
-          <div class="stats__item">
-            <span class="stats__value">2</span>
-            <span class="stats__label">Hackathons, including a full-stack build at StormHacks 2026</span>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="sec-pad sec-alt" aria-labelledby="featured-title">
-      <div class="main-container">
-        <div class="section-head">
-          <div>
-            <h2 class="section-head__title" id="featured-title">Featured project</h2>
-            <p class="section-head__sub">The most recent thing I built.</p>
-          </div>
-          <a href="./projects.html" class="text-link">All projects &rarr;</a>
-        </div>
-{project_card(PROJECTS[0])}
-      </div>
-    </section>
-    <section class="sec-pad" aria-labelledby="roles-title">
-      <div class="main-container">
-        <div class="section-head">
-          <div>
-            <h2 class="section-head__title" id="roles-title">Selected experience</h2>
-            <p class="section-head__sub">Payments compliance, data and a company I co-founded.</p>
-          </div>
-          <a href="./experience.html" class="text-link">Full experience &rarr;</a>
-        </div>
-        <div class="card-grid card-grid--3">
-{role_cards}
-        </div>
-      </div>
-    </section>
-{contact}"""
-
-page(
-    "index.html",
-    "Konstantin Tovshtein",
-    "Portfolio of Konstantin Tovshtein, a BBA student at Simon Fraser University in Management Information Systems and Accounting, aiming for fintech and information systems.",
-    "home",
-    index_body,
-)
-
-# ---------------------------------------------------------------- experience
-
-
-def timeline_item(r):
-    points = "\n".join(f"              <li>{p}</li>" for p in r["points"])
-    btns = ""
-    if r["case"]:
-        btns += f'\n              <a href="{r["case"]}" class="btn btn--med btn--theme-inv">Case Study</a>'
-    btns += ext_links(r.get("links", []), "              ")
-    action = f'\n            <div class="timeline__actions">{btns}\n            </div>' if btns else ""
-    return f"""          <article class="timeline__item">
-            <!-- TODO: add dates for this role -->
-            <p class="timeline__org">{r["org"]}</p>
-            <h2 class="timeline__role">{r["role"]}</h2>
-            <p class="timeline__meta">{r["meta"]}</p>
-            <ul class="timeline__points">
-{points}
-            </ul>
-{chips(r["tools"], "            ")}{action}
-          </article>"""
-
-
-exp_body = (
-    page_hero(
-        "Experience",
-        "Payments compliance, data analysis, accounting and a company I co-founded.",
-    )
-    + f"""    <section class="sec-pad">
-      <div class="main-container">
-        <div class="timeline">
-{chr(10).join(timeline_item(r) for r in ROLES)}
-        </div>
-      </div>
-    </section>
-"""
-)
-page(
-    "experience.html",
-    "Experience | Konstantin Tovshtein",
-    "Work experience of Konstantin Tovshtein: One Pay Ltd, Jetlink Solutions, Repatt AI, Crowe MacKay and Medusa Events.",
-    "experience",
-    exp_body,
-)
-
-# ---------------------------------------------------------------- projects
-
-proj_body = (
-    page_hero(
-        "Projects",
-        "Hackathons and course projects, from a GPU sharing app to market expansion research.",
-    )
-    + f"""    <section class="sec-pad">
-      <div class="main-container">
-        <div class="card-grid">
-{chr(10).join(project_card(p, "h2") for p in PROJECTS)}
-        </div>
-      </div>
-    </section>
-"""
-)
-page(
-    "projects.html",
-    "Projects | Konstantin Tovshtein",
-    "Projects by Konstantin Tovshtein, including a GPU sharing platform built at StormHacks 2026 and the Beedie Business Analytics Hackathon.",
-    "projects",
-    proj_body,
-)
-
-# ---------------------------------------------------------------- about
 
 SKILLS = [
     ("Languages and frameworks", ["Python", "C", "Go", "Rust", "Next.js", "SQL"]),
@@ -625,13 +332,6 @@ SKILLS = [
     ("Design", ["Figma", "Canva"]),
     ("Accounting", ["QuickBooks", "Financial ledgers", "PCI DSS"]),
 ]
-skill_groups = "\n".join(
-    f"""          <div class="skill-group">
-            <h3 class="skill-group__title">{title}</h3>
-{chips(items, "            ")}
-          </div>"""
-    for title, items in SKILLS
-)
 
 INTERESTS = [
     (
@@ -651,143 +351,284 @@ INTERESTS = [
         "I grow houseplants at home, including a Foxtail Fern.",
     ),
 ]
-interest_cards = "\n".join(
-    f"""          <article class="card">
-            <h3 class="card__title">{t}</h3>
-            <p class="card__desc">{d}</p>
+
+
+def project_card(p):
+    # The whole card is one link: to its case study, else to its external page, else no link.
+    if p.get("case"):
+        tag, attrs = "a", f' href="{p["case"]}"'
+    elif p.get("link"):
+        tag, attrs = "a", f' href="{p["link"]}" target="_blank" rel="noopener noreferrer"'
+    else:
+        tag, attrs = "article", ""
+    media = (
+        f"""
+              <div class="project-card__media">
+                <img src="{p["image"]}" srcset="{srcset(p["image"])}" sizes="(min-width: 768px) 720px, 92vw" alt="" width="2505" height="1282" loading="lazy" decoding="async" />
+              </div>"""
+        if p.get("image")
+        else ""
+    )
+    return f"""            <{tag} class="project-card"{attrs}>{media}
+              <div class="project-card__top">
+                <span class="label">{p["eyebrow"]}</span>{TEAM_BADGE if p.get("team") else ""}
+              </div>
+              <h3 class="project-card__title">{p["title"]}</h3>
+              <p class="project-card__desc">{p["desc"]}</p>
+{tags(p["tools"], "              ")}
+            </{tag}>"""
+
+
+def entry(r):
+    points = "".join(f"\n              <li>{p}</li>" for p in r["points"])
+    meta = f'\n                <p class="entry__meta">{r["meta"]}</p>' if r.get("meta") else ""
+    skills = (
+        f'\n            <p class="entry__skills">{" &middot; ".join(r["tools"])}</p>' if r.get("tools") else ""
+    )
+    links = ""
+    if r.get("case"):
+        links += f'\n              <a href="{r["case"]}" class="text-link">Read the case study &rarr;</a>'
+    links += ext_links(r.get("links", []), "              ")
+    links_block = f'\n            <div class="entry__links">{links}\n            </div>' if links else ""
+    return f"""          <article class="entry">
+            <div class="entry__head">
+              <span class="entry__logo" aria-hidden="true">{r["mark"]}</span>
+              <div>
+                <h3 class="entry__role">{r["role"]}</h3>
+                <p class="entry__org">{r["org"]}</p>{meta}
+              </div>
+            </div>
+            <ul class="entry__points">{points}
+            </ul>{skills}{links_block}
           </article>"""
-    for t, d in INTERESTS
+
+
+# ---------------------------------------------------------------- index
+
+resume_pill = (
+    f'\n            <a href="./{RESUME}" class="pill">{RESUME_ICON}Résumé (PDF)</a>' if HAS_RESUME else ""
 )
 
-about_body = (
-    page_hero(
-        "About",
-        "Business student, part-time developer, full-time tinkerer.",
-    )
-    + f"""    <section class="sec-pad">
-      <div class="main-container about-page__grid">
-        <div>
-          <h2 class="section-head__title">My story</h2>
-          <p class="about-page__para">
-            I'm <strong>Konstantin Tovshtein</strong>, a fourth-year Business Administration student at <strong>Simon Fraser University</strong> in Burnaby. I concentrate in <strong>Management Information Systems</strong> and <strong>Accounting</strong>, with a minor in <strong>Computer Science</strong>.
-          </p>
-          <p class="about-page__para">
-            My work sits between finance and engineering. I review ledgers, build dashboards, write SQL and Python, and I have helped get payment software ready for PCI DSS. I want to build a career in <strong>fintech and information systems</strong>, where both sides matter.
-          </p>
-          <p class="about-page__para">
-            Most of what I know came from doing it. I co-founded an events company with three partners, built a monitoring dashboard that helped cut system costs by 25%, automated lead generation with Python, and built the Solana payments for CoreShare, a GPU sharing marketplace our team made at StormHacks 2026.
-          </p>
-          <div class="about-page__actions">
-            <a href="./index.html#contact" class="btn btn--med btn--theme">Get in touch</a>{RESUME_BUTTON.replace('btn btn--theme-inv', 'btn btn--med btn--theme-inv')}
-          </div>
-        </div>
-        <div>
-          <h2 class="section-head__title">Education</h2>
-          <div class="about-page__edu-item">
-            <p class="about-page__edu-school">Simon Fraser University</p>
-            <p class="about-page__edu-detail">Bachelor of Business Administration, fourth year. Concentrations in Management Information Systems and Accounting. Minor in Computer Science.</p>
-          </div>
-          <div class="about-page__edu-item">
-            <p class="about-page__edu-school">Fraser International College</p>
-            <p class="about-page__edu-detail">Pathway to SFU. Mentored first-year international students as they settled into university life.</p>
-          </div>
-        </div>
+hero = """    <section class="hero" id="hero">
+      <div class="hero__content">
+        <h1 class="hero__name">Konstantin Tovshtein</h1>
+        <p class="hero__sub">BBA Student at SFU &middot; MIS, Accounting, Computer Science</p>
       </div>
+      <a href="#intro" class="hero__arrow" aria-label="Scroll to introduction"><span class="hero__arrow-icon"></span></a>
     </section>
-    <section class="sec-pad sec-alt" aria-labelledby="skills-title">
-      <div class="main-container">
-        <div class="section-head">
-          <div>
-            <h2 class="section-head__title" id="skills-title">Skills</h2>
-            <p class="section-head__sub">Tools I use at work, in class and on my own projects.</p>
+"""
+
+intro = f"""    <section class="section reveal" id="intro" aria-label="Introduction">
+      <div class="container">
+        <div class="panel intro">
+          <div class="intro__text">
+            <p class="intro__lead">A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. Next stop, a career in fintech.</p>
+            <div class="pills">{resume_pill}
+              <a href="{GITHUB}" class="pill" target="_blank" rel="noopener noreferrer">{social_icon("github", "pill__icon", 18)}GitHub</a>
+              <a href="{LINKEDIN}" class="pill" target="_blank" rel="noopener noreferrer">{social_icon("linkedin", "pill__icon", 18)}LinkedIn</a>
+            </div>
           </div>
-        </div>
-        <div class="skill-groups">
-{skill_groups}
-        </div>
-        <p class="callout">
-          <strong>Currently learning:</strong> agentic harnesses, the tooling that lets AI models plan and act across multi-step tasks. I also understand core data structures and have written custom sorting implementations in C.
-        </p>
-      </div>
-    </section>
-    <section class="sec-pad" aria-labelledby="beyond-title">
-      <div class="main-container">
-        <div class="section-head">
-          <div>
-            <h2 class="section-head__title" id="beyond-title">Beyond work</h2>
-            <p class="section-head__sub">What I do when I'm not at a keyboard.</p>
-          </div>
-        </div>
-        <div class="card-grid">
-{interest_cards}
+          <img class="intro__photo" src="./assets/png/konstantin-tovshtein.webp" width="320" height="320" alt="Konstantin Tovshtein" />
         </div>
       </div>
     </section>
 """
+
+featured = section(
+    "featured",
+    "Featured Projects",
+    f"""        <div class="project-list">
+{chr(10).join(project_card(p) for p in PROJECTS if p.get("featured"))}
+        </div>""",
+    '\n        <p class="see-all"><a href="./projects.html" class="text-link">See all projects &rarr;</a></p>',
 )
+
+experience = section(
+    "experience",
+    "Experience",
+    f"""        <div class="entries">
+{chr(10).join(entry(r) for r in ROLES)}
+        </div>""",
+)
+
+education = section(
+    "education",
+    "Education",
+    f"""        <div class="entries">
+{chr(10).join(entry(r) for r in EDUCATION)}
+        </div>""",
+)
+
+skill_groups = "\n".join(
+    f"""          <div class="skill-group">
+            <h3 class="skill-group__title">{title}</h3>
+{tags(items, "            ")}
+          </div>"""
+    for title, items in SKILLS
+)
+skills = section(
+    "skills",
+    "Skills",
+    f"""        <div class="skill-groups">
+{skill_groups}
+        </div>
+        <p class="note">
+          <strong>Currently learning:</strong> agentic harnesses, the tooling that lets AI models plan and act across multi-step tasks. I also understand core data structures and have written custom sorting implementations in C.
+        </p>""",
+)
+
+interest_cards = "\n".join(
+    f"""          <article class="mini">
+            <h3 class="mini__title">{t}</h3>
+            <p class="mini__desc">{d}</p>
+          </article>"""
+    for t, d in INTERESTS
+)
+beyond = section(
+    "beyond",
+    "Beyond work",
+    f"""        <div class="mini-grid">
+{interest_cards}
+        </div>""",
+)
+
+contact = f"""    <section class="section reveal" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact__head">
+          <h2 class="section-title" id="contact-title" data-type>Contact</h2>
+          <div class="pills">
+            <a href="{LINKEDIN}" class="pill pill--icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">{social_icon("linkedin", "pill__icon", 18)}</a>
+            <a href="{GITHUB}" class="pill pill--icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub repositories">{social_icon("github", "pill__icon", 18)}</a>
+          </div>
+        </div>
+        <p class="contact__intro">Open to roles, contracts, or conversations about interesting work.</p>
+        <form
+          action="https://formspree.io/f/{FORMSPREE_ID}"
+          method="POST"
+          class="contact__form"
+          data-contact-form
+        >
+          <div class="field">
+            <label class="field__label" for="name">Name</label>
+            <input required type="text" autocomplete="name" class="field__input" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input required type="email" autocomplete="email" class="field__input" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="message">Message</label>
+            <textarea data-lenis-prevent required rows="6" class="field__input" name="message" id="message"></textarea>
+          </div>
+          <input type="text" name="_gotcha" class="contact__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="contact__actions">
+            <button type="submit" class="btn">Send</button>
+            <p class="contact__status" role="status" data-contact-status></p>
+          </div>
+        </form>
+        <p class="contact__alt">
+          Prefer LinkedIn?
+          <a href="{LINKEDIN}" target="_blank" rel="noopener noreferrer">Message me there</a>.
+        </p>
+      </div>
+    </section>
+"""
+
 page(
-    "about.html",
-    "About | Konstantin Tovshtein",
-    "About Konstantin Tovshtein: education at Simon Fraser University, technical skills and interests.",
-    "about",
-    about_body,
+    "index.html",
+    "Konstantin Tovshtein",
+    "Portfolio of Konstantin Tovshtein, a BBA student at Simon Fraser University in Management Information Systems and Accounting, aiming for fintech and information systems.",
+    "home",
+    "page-home",
+    hero + intro + featured + experience + education + skills + beyond + contact,
+)
+
+# ---------------------------------------------------------------- projects
+
+chips = "\n".join(
+    f'            <li><a href="#{key}" class="pill">{label}</a></li>' for key, label in CATEGORIES
+)
+categories = "\n".join(
+    f"""    <section class="category reveal" id="{key}" aria-labelledby="{key}-title">
+      <div class="container container--wide">
+        <h2 class="category__title" id="{key}-title">{label}</h2>
+        <div class="project-grid">
+{chr(10).join(project_card(p) for p in PROJECTS if p["category"] == key)}
+        </div>
+      </div>
+    </section>"""
+    for key, label in CATEGORIES
+)
+proj_body = f"""    <section class="page-head">
+      <div class="container container--wide">
+        <h1 class="page-title" data-scramble>Projects</h1>
+        <div class="panel projects-intro">
+          <p class="projects-intro__text">Hackathons, work and course projects, from a GPU sharing app to market expansion research.</p>
+          <ul class="pills">
+{chips}
+          </ul>
+        </div>
+      </div>
+    </section>
+{categories}
+"""
+page(
+    "projects.html",
+    "Projects | Konstantin Tovshtein",
+    "Projects by Konstantin Tovshtein, including a GPU sharing platform built at StormHacks 2026 and the Beedie Business Analytics Hackathon.",
+    "projects",
+    "page-projects",
+    proj_body,
 )
 
 # ---------------------------------------------------------------- case studies
 
+TO_PROJECTS = ("./projects.html", "Back to Projects")
+TO_EXPERIENCE = ("./index.html#experience", "Back to Experience")
+
 
 def case_study(name, title, sub, sections, tools, back, desc, image=None, links=(), team=False):
     secs = "\n".join(
-        f"""            <div class="project-details__desc">
-              <h2 class="project-details__content-title">{h}</h2>
-{chr(10).join(f'              <p class="project-details__desc-para">{p}</p>' for p in paras)}
-            </div>"""
+        f"""          <section class="case__section">
+            <h2>{h}</h2>
+{chr(10).join(f'            <p>{p}</p>' for p in paras)}
+          </section>"""
         for h, paras in sections
     )
     back_href, back_label = back
     if image:
         src, alt, caption = image
-        # Smaller copies sit next to the original as name-800.webp etc.; list the ones that exist.
-        stem = src.removesuffix(".webp")
-        widths = [w for w in (800, 1280, 1920) if (ROOT / f"{stem}-{w}.webp").exists()]
-        srcset = ", ".join([f"{stem}-{w}.webp {w}w" for w in widths] + [f"{src} 2505w"])
-        # The figure fills .project-details__content: 92% of the viewport, at most 90rem
-        # (900px, or 936px from 1800px where the root font size rises to 65%).
-        sizes = "(min-width: 1800px) 936px, (min-width: 980px) 900px, 92vw"
-        showcase = f"""          <figure class="project-details__showcase-img-cont">
-            <img src="{src}" srcset="{srcset}" sizes="{sizes}" alt="{alt}" class="project-details__showcase-img" width="2505" height="1282" decoding="async" />
-            <figcaption class="project-details__caption">{caption}</figcaption>
+        showcase = f"""          <figure class="case__figure">
+            <img src="{src}" srcset="{srcset(src)}" sizes="(min-width: 768px) 656px, 88vw" alt="{alt}" width="2505" height="1282" decoding="async" />
+            <figcaption>{caption}</figcaption>
           </figure>"""
     else:
-        showcase = "          <!-- TODO: add a real screenshot or photo here (project-details__showcase-img) -->"
-    ext = ext_links(links, "              ", "btn btn--med btn--theme-inv project-details__links-btn")
-    body = f"""    <section class="project-cs-hero">
-      <div class="project-cs-hero__content">{('<div class="project-cs-hero__badge">' + TEAM_BADGE + '</div>') if team else ""}
-        <h1 class="heading-primary">{title}</h1>
-        <div class="project-cs-hero__info">
-          <p class="text-primary">{sub}</p>
-        </div>
-      </div>
-    </section>
-    <section class="project-details">
-      <div class="main-container">
-        <div class="project-details__content">
+        showcase = "          <!-- TODO: add a real screenshot or photo here (case__figure) -->"
+    meta = ""
+    if links or team:
+        meta = f"""
+          <div class="case__meta">
+            <div class="case__links">{ext_links(links, "              ")}
+            </div>{TEAM_BADGE if team else ""}
+          </div>"""
+    body = f"""    <div class="case-page">
+      <div class="container">
+        <article class="case">
+          <p class="case__back"><a href="{back_href}">&larr; {back_label}</a></p>
+          <h1 class="case__title">{title}</h1>
+          <p class="case__desc">{sub}</p>{meta}
 {showcase}
-          <div class="project-details__content-main">
 {secs}
-            <div class="project-details__tools-used">
-              <h2 class="project-details__content-title">Tools Used</h2>
-{chips(tools)}
-            </div>
-            <div class="project-details__links">
-              <a href="{back_href}" class="btn btn--med btn--theme project-details__links-btn">{back_label}</a>{ext}
-            </div>
-          </div>
-        </div>
+          <section class="case__section">
+            <h2>Tools used</h2>
+{tags(tools, "            ")}
+          </section>
+        </article>
       </div>
-    </section>
+    </div>
 """
-    page(name, f"{title.replace(' &mdash; ', ' | ')} | Konstantin Tovshtein", desc, "experience" if "experience" in back_href else "projects", body)
+    active = "projects" if back == TO_PROJECTS else None
+    page(name, f"{title.replace(' &mdash; ', ' | ')} | Konstantin Tovshtein", desc, active, "page-case", body)
 
 
 case_study(
@@ -811,7 +652,7 @@ case_study(
         ),
     ],
     ["Canva", "Figma", "Higgsfield", "Gemini", "Asana", "Excel", "QuickBooks"],
-    ("./experience.html", "All Experience"),
+    TO_EXPERIENCE,
     "How Konstantin Tovshtein co-founded and runs Medusa Events, a nightlife and themed events company in Vancouver.",
 )
 
@@ -842,7 +683,7 @@ case_study(
         ),
     ],
     ["Next.js", "Tailwind", "Electron", "FastAPI", "Python", "PostgreSQL", "TimescaleDB", "Docker", "NVIDIA MPS", "Solana"],
-    ("./projects.html", "All Projects"),
+    TO_PROJECTS,
     "Case study: CoreShare, a GPU sharing marketplace with Solana wallet sign-in and Devnet payouts, built at StormHacks 2026.",
     links=[("Team repo on GitHub", CORESHARE_TEAM_REPO), ("My fork", CORESHARE_REPO)],
     team=True,
@@ -868,7 +709,7 @@ case_study(
         ),
     ],
     ["Rust", "PCI DSS", "Visa certification", "GitHub"],
-    ("./experience.html", "All Experience"),
+    TO_EXPERIENCE,
     "Case study: Konstantin Tovshtein's compliance work at One Pay Ltd for PCI DSS and Visa certification.",
     links=[("One Pay website", ONE_PAY_SITE)],
 )
@@ -894,10 +735,10 @@ case_study(
         ),
     ],
     ["ProxySmart", "Dashboard design", "Data analysis", "Technical support"],
-    ("./experience.html", "All Experience"),
+    TO_EXPERIENCE,
     "Case study: ProxySmart, a proxy infrastructure dashboard by Konstantin Tovshtein that helped Jetlink Solutions cut system costs by 25%.",
     image=(
-        "./assets/jpeg/jetlink-proxysmart-dashboard.webp",
+        PROXYSMART_IMG,
         "ProxySmart dashboard for JetLink Canada showing 1 of 1 servers online, 39 devices, 24 working, 15 idle, 0 errors and 24 ports",
         "ProxySmart, the dashboard I built for JetLink Canada: servers, devices and their working, idle and error status at a glance.",
     ),

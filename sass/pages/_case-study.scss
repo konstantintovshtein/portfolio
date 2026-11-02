@@ -1,0 +1,91 @@
+.case-page {
+  padding: calc(var(--nav-h) + 4rem) 0 2rem;
+}
+
+.case {
+  @include glass;
+  padding: 3.6rem 3.2rem;
+  border-radius: $radius-lg;
+
+  @include respond(phone) {
+    padding: 2.4rem 2rem;
+  }
+
+  &__back {
+    margin-bottom: 0.8rem;
+
+    a {
+      @include type-small;
+      display: inline-block;
+      padding: 1rem 0;
+      color: var(--accent-mist);
+      transition: color var(--transition);
+
+      &:hover {
+        color: var(--accent-light);
+      }
+    }
+  }
+
+  &__title {
+    @include type-case-title;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  &__desc {
+    @include type-body;
+    color: var(--text-muted);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem 2rem;
+    margin-top: 1rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2.4rem;
+  }
+
+  &__figure {
+    margin: 2.8rem 0 0.8rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: $radius-md;
+    }
+
+    figcaption {
+      @include type-meta;
+      margin-top: 1.2rem;
+      text-align: center;
+      text-wrap: balance;
+      color: var(--text-dim);
+    }
+  }
+
+  &__section {
+    margin-top: 3.2rem;
+
+    h2 {
+      @include type-kicker;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    p {
+      @include type-body;
+      max-width: $measure;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+    }
+  }
+}

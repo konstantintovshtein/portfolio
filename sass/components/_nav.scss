@@ -1,0 +1,64 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgb(var(--bg-rgb) / 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+
+  &__inner {
+    max-width: 104rem;
+    height: var(--nav-h);
+    margin: 0 auto;
+    padding: 0 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+
+    @include respond(phone) {
+      padding: 0 1.2rem 0 1.6rem;
+    }
+  }
+
+  &__logo {
+    @include type-ui;
+    color: var(--text);
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--accent-mist);
+    }
+
+    // On phones the name stacks into two lines so the links keep their room.
+    @include respond(phone) {
+      width: min-content;
+      line-height: 1.15;
+    }
+  }
+
+  &__links {
+    display: flex;
+  }
+
+  &__link {
+    @include type-ui;
+    font-weight: 500;
+    display: block;
+    padding: 1.2rem 1rem;
+    color: var(--text-muted);
+    transition: color var(--transition);
+
+    &:hover,
+    &[aria-current='page'] {
+      color: var(--text);
+    }
+
+    @include respond(phone) {
+      padding-inline: 0.8rem;
+    }
+  }
+}

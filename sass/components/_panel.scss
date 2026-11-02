@@ -1,0 +1,68 @@
+.container {
+  max-width: 76.8rem;
+  margin: 0 auto;
+  padding: 0 2.4rem;
+
+  &--wide {
+    max-width: 96rem;
+  }
+
+  @include respond(phone) {
+    padding: 0 1.6rem;
+  }
+}
+
+.section {
+  padding: 4rem 0;
+  scroll-margin-top: var(--nav-h);
+}
+
+.section-title {
+  @include type-section;
+  color: var(--text);
+  min-height: 1.3em; // holds its height while the title types itself in
+  margin-bottom: 2.4rem;
+}
+
+.type-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: text-bottom;
+  animation: caret-blink 1s step-end infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.panel {
+  @include glass;
+  border-radius: $radius-lg;
+  padding: 3.6rem 2.8rem;
+
+  @include respond(phone) {
+    padding: 2.4rem 2rem;
+  }
+}
+
+// Sections fade up as they scroll in. Only with JavaScript, so nothing stays hidden without it.
+.js .reveal {
+  opacity: 0;
+  transform: translateY(2.8rem);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+  }
+}

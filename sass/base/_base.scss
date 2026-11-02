@@ -12,12 +12,9 @@ html {
   font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
   scroll-behavior: smooth;
   background: var(--bg);
-
-  @include respond(big-desktop) {
-    font-size: 65%; //1rem =
-  }
 }
 
+// Transparent so the fixed .page-bg layer shows through.
 body {
   @include type-body;
   box-sizing: border-box;
@@ -26,7 +23,6 @@ body {
   overflow-y: scroll;
   font-family: var(--font-sans);
   font-feature-settings: $ff-text;
-  background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,6 +32,7 @@ h1,
 h2,
 h3,
 h4 {
+  font-weight: inherit;
   text-wrap: balance;
 }
 
@@ -54,9 +51,28 @@ li {
   list-style: none;
 }
 
+img {
+  display: block;
+  max-width: 100%;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
 ::selection {
   background: var(--accent-btn);
   color: var(--on-accent);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 // Visible only when focused with the keyboard: jumps past the header.
@@ -65,7 +81,7 @@ li {
   top: 1.2rem;
   left: 1.6rem;
   z-index: 2000;
-  @include type-button;
+  @include type-ui;
   padding: 1.2rem 2rem;
   background: var(--accent-btn);
   color: var(--on-accent);
@@ -91,7 +107,6 @@ main:focus {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: $radius-sm;
 }
 
 button {
@@ -99,10 +114,6 @@ button {
   cursor: pointer;
   background: none;
   color: inherit;
-}
-
-textarea {
-  resize: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

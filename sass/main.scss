@@ -6,17 +6,16 @@
 @import 'base/fonts';
 @import 'base/base';
 
-@import 'abstracts/utilities';
+@import 'components/background';
+@import 'components/nav';
+@import 'components/controls';
+@import 'components/panel';
+@import 'components/project-card';
+@import 'components/entry';
+@import 'components/contact';
+@import 'components/footer';
+@import 'components/lenis';
 
 @import 'pages/home';
-@import 'pages/project-case-study';
-@import 'pages/about';
-
-@import 'components/header';
-@import 'components/footer';
-@import 'components/skills';
-@import 'components/mouse-scroll';
-@import 'components/stats';
-@import 'components/project-card';
-@import 'components/timeline';
-@import 'components/lenis';
+@import 'pages/projects';
+@import 'pages/case-study';

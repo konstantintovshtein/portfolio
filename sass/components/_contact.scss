@@ -1,0 +1,114 @@
+.contact {
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: 1.6rem;
+
+    .section-title {
+      margin-bottom: 0;
+    }
+  }
+
+  &__intro {
+    @include type-body;
+    color: var(--text-muted);
+    margin-bottom: 2.4rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem 2rem;
+
+    @include respond(phone) {
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  &__status {
+    @include type-small;
+    flex: 1;
+    color: var(--text-muted);
+
+    &:empty {
+      display: none;
+    }
+
+    &[data-state='success'] {
+      color: var(--accent-mist);
+    }
+
+    &[data-state='error'] {
+      color: var(--danger);
+    }
+  }
+
+  &__honeypot {
+    display: none;
+  }
+
+  &__alt {
+    @include type-small;
+    margin-top: 2.4rem;
+    color: var(--text-muted);
+
+    a {
+      color: var(--accent-mist);
+      text-decoration: underline;
+      text-underline-offset: 0.4rem;
+    }
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  &__label {
+    @include type-small;
+    font-weight: 550;
+    color: var(--text);
+  }
+
+  // 16px keeps phones from zooming in when a field takes focus.
+  &__input {
+    @include type-body;
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--field-border);
+    border-radius: $radius-md;
+    background: rgb(var(--glass-rgb) / 0.6);
+    color: var(--text);
+    caret-color: var(--accent);
+    transition: border-color var(--transition);
+
+    &:hover {
+      border-color: var(--text-dim);
+    }
+
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.25);
+    }
+  }
+
+  textarea#{&}__input {
+    min-height: 14rem;
+    resize: vertical;
+  }
+}
