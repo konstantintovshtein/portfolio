@@ -8,7 +8,7 @@
     Start-Process -Wait $edge '--headless', '--hide-scrollbars', '--window-size=1200,630', '--virtual-time-budget=3000', "--user-data-dir=$env:TEMP\kt-share-card", "--screenshot=$PWD\assets\png\share-card.png", "$PWD\tools\share-card.html"
 
   LinkedIn caches previews: paste a page URL into https://www.linkedin.com/post-inspector/ to refresh it.
-  Every line of copy here also appears on the site; keep it that way.
+  Every fact here also appears on the site's home page; keep it that way.
 -->
 <html lang="en">
   <head>
@@ -37,7 +37,10 @@
         color: var(--text);
         font-family: var(--font-sans);
         font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1;
-        background: var(--bg);
+        /* Same wash as the site's .page-bg. */
+        background:
+          radial-gradient(90% 70% at 50% 0%, rgb(var(--accent-btn-rgb) / 0.12), transparent 65%),
+          linear-gradient(165deg, #04060b 0%, #0a1222 30%, #0c1528 50%, #0a1222 70%, #04060b 100%);
       }
 
       .card__top {
@@ -49,12 +52,15 @@
 
       .card__name {
         margin: 0;
-        font-size: 84px;
-        font-weight: 800;
-        font-stretch: 125%;
-        line-height: 0.98;
-        text-transform: uppercase;
-        font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1, 'case' 1;
+        font-size: 92px;
+        font-weight: 650;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        /* The hero's gradient, frozen. */
+        background-image: linear-gradient(90deg, #eff6ff 0%, #93c5fd 25%, #3b82f6 50%, #93c5fd 75%, #eff6ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
       .card__sub {
@@ -69,7 +75,7 @@
         flex: none;
         width: 184px;
         height: 184px;
-        border-radius: 50%;
+        border-radius: 16px;
         border: 1px solid var(--border);
         object-fit: cover;
         background: var(--surface-2);
@@ -102,10 +108,9 @@
 
       .ledger__value {
         font-size: 64px;
-        font-weight: 800;
-        font-stretch: 125%;
+        font-weight: 650;
         line-height: 1;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.03em;
         font-feature-settings: 'kern' 1, 'ss05' 1, 'ss06' 1, 'tnum' 1;
       }
 

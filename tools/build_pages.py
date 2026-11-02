@@ -1,4 +1,4 @@
-"""Generate the portfolio's HTML pages from one shared head, header and footer.
+"""Generate the portfolio's HTML pages from one shared head and navigation.
 
 Usage (from the repo root): npm run build:html
                         or: python tools/build_pages.py
@@ -6,16 +6,17 @@ Usage (from the repo root): npm run build:html
 Edit page content in this file, never in the generated .html files: the next build overwrites them.
 """
 import sys
-from datetime import date
 from pathlib import Path
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parent.parent
 
-# Formspree form ID (the part after /f/ in your Formspree endpoint).
-# Until it is set, the form shows a "not connected yet" message instead of sending.
-FORMSPREE_ID = "YOUR_FORM_ID"
+# The Contact button opens a new Gmail message to this address. The address is also shown
+# as plain text, for visitors who don't use Gmail.
+EMAIL = "konstantintovshtein21@gmail.com"
+GMAIL_COMPOSE = f"https://mail.google.com/mail/?view=cm&fs=1&to={EMAIL}"
 
-# Drop your résumé at this path and rebuild: a "Résumé" nav link and intro button appear automatically.
+# Drop your résumé at this path and rebuild: a "Résumé" nav link, an intro button and
+# resume.html (a short address that forwards to the PDF) appear automatically.
 RESUME = "assets/Konstantin-Tovshtein-Resume.pdf"
 HAS_RESUME = (ROOT / RESUME).exists()
 
@@ -150,11 +151,7 @@ def header(active):
 """
 
 
-FOOTER = f"""    <footer class="footer">
-      <p>&copy; {date.today().year} Konstantin Tovshtein</p>
-    </footer>
-
-    <script src="./assets/vendor/lenis/lenis.min.js"></script>
+SCRIPTS = """    <script src="./assets/vendor/lenis/lenis.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
@@ -168,9 +165,29 @@ def tags(items, indent):
 
 def page(name, title, desc, active, cls, body):
     main = f'    <main id="main" tabindex="-1">\n{body}    </main>\n'
-    html = head(name, title, desc, cls) + header(active) + main + FOOTER
+    html = head(name, title, desc, cls) + header(active) + main + SCRIPTS
     (ROOT / name).write_text(html, encoding="utf-8", newline="\n")
     print("wrote", name)
+
+
+def redirect(name, target, label):
+    # A stand-in page that forwards at once, so addresses already shared keep working.
+    url = SITE_URL + target.removeprefix("./")
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Konstantin Tovshtein</title>
+    <link rel="canonical" href="{url}" />
+    <meta http-equiv="refresh" content="0; url={target}" />
+  </head>
+  <body>
+    <p><a href="{target}">{label}</a></p>
+  </body>
+</html>
+"""
+    (ROOT / name).write_text(html, encoding="utf-8", newline="\n")
+    print("wrote", name, "->", target)
 
 
 def section(key, title, inner, extra=""):
@@ -422,7 +439,7 @@ intro = f"""    <section class="section reveal" id="intro" aria-label="Introduct
       <div class="container">
         <div class="panel intro">
           <div class="intro__text">
-            <p class="intro__lead">A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. Next stop, a career in fintech.</p>
+            <p class="intro__lead">A fourth-year BBA student at Simon Fraser University. I work where finance meets information systems: dashboards, databases, compliance and the code that ties them together. My ProxySmart dashboard helped Jetlink Solutions cut system costs by <strong>25%</strong>, and at Crowe MacKay I finished <strong>10%</strong> above my assigned workload. Next stop, a career in fintech.</p>
             <div class="pills">{resume_pill}
               <a href="{GITHUB}" class="pill" target="_blank" rel="noopener noreferrer">{social_icon("github", "pill__icon", 18)}GitHub</a>
               <a href="{LINKEDIN}" class="pill" target="_blank" rel="noopener noreferrer">{social_icon("linkedin", "pill__icon", 18)}LinkedIn</a>
@@ -492,7 +509,7 @@ beyond = section(
         </div>""",
 )
 
-contact = f"""    <section class="section reveal" id="contact" aria-labelledby="contact-title">
+contact = f"""    <section class="section contact reveal" id="contact" aria-labelledby="contact-title">
       <div class="container">
         <div class="contact__head">
           <h2 class="section-title" id="contact-title" data-type>Contact</h2>
@@ -502,30 +519,10 @@ contact = f"""    <section class="section reveal" id="contact" aria-labelledby="
           </div>
         </div>
         <p class="contact__intro">Open to roles, contracts, or conversations about interesting work.</p>
-        <form
-          action="https://formspree.io/f/{FORMSPREE_ID}"
-          method="POST"
-          class="contact__form"
-          data-contact-form
-        >
-          <div class="field">
-            <label class="field__label" for="name">Name</label>
-            <input required type="text" autocomplete="name" class="field__input" name="name" id="name" />
-          </div>
-          <div class="field">
-            <label class="field__label" for="email">Email</label>
-            <input required type="email" autocomplete="email" class="field__input" name="email" id="email" />
-          </div>
-          <div class="field">
-            <label class="field__label" for="message">Message</label>
-            <textarea data-lenis-prevent required rows="6" class="field__input" name="message" id="message"></textarea>
-          </div>
-          <input type="text" name="_gotcha" class="contact__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <div class="contact__actions">
-            <button type="submit" class="btn">Send</button>
-            <p class="contact__status" role="status" data-contact-status></p>
-          </div>
-        </form>
+        <div class="contact__actions">
+          <a href="{GMAIL_COMPOSE}" class="btn" target="_blank" rel="noopener noreferrer">Email me in Gmail</a>
+          <p class="contact__email">or write to <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+        </div>
         <p class="contact__alt">
           Prefer LinkedIn?
           <a href="{LINKEDIN}" target="_blank" rel="noopener noreferrer">Message me there</a>.
@@ -542,6 +539,14 @@ page(
     "page-home",
     hero + intro + featured + experience + education + skills + beyond + contact,
 )
+
+# About and Experience were folded into the home page; their old addresses forward there.
+redirect("about.html", "./index.html#intro", "About moved to the home page")
+redirect("experience.html", "./index.html#experience", "Experience moved to the home page")
+if HAS_RESUME:
+    redirect("resume.html", f"./{RESUME}", "Open the résumé (PDF)")
+else:
+    (ROOT / "resume.html").unlink(missing_ok=True)
 
 # ---------------------------------------------------------------- projects
 

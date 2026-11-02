@@ -14,11 +14,6 @@
   &:hover {
     background: var(--accent-hover);
   }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: progress;
-  }
 }
 
 // Padded to a 44px-tall hit area.

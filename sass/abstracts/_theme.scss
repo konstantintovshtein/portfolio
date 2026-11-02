@@ -3,11 +3,9 @@
   color-scheme: dark;
 
   --bg: #05070c;
-  --surface: #0f141f;
-  --surface-2: #161d2c;
-  --border: #252d3d;
+  --surface-2: #161d2c; // used by tools/share-card.html
+  --border: #252d3d; // used by tools/share-card.html
   --line: rgb(255 255 255 / 0.08);
-  --field-border: #566079; // 3:1 against the page, so form fields stay visible
   --text: #f5f7fa;
   --text-muted: #a3abb9;
   --text-dim: #7c8597;
@@ -17,7 +15,6 @@
   --accent-mist: #93c5fd;
   --accent-light: #dbeafe;
   --on-accent: #ffffff;
-  --danger: #fca5a5;
 
   // Colour channels for translucent tints, e.g. rgb(var(--accent-btn-rgb) / 0.2)
   --accent-rgb: 59 130 246;

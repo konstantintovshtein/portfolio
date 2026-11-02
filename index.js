@@ -1,5 +1,71 @@
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
+// --- Animated titles. Screen readers get the full text at once from a hidden copy.
+const splitTitle = (el) => {
+  const full = el.textContent.trim()
+  const hidden = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: full })
+  const shown = document.createElement('span')
+  shown.setAttribute('aria-hidden', 'true')
+  el.replaceChildren(hidden, shown)
+  return [full, shown]
+}
+
+const typeTitle = (el) => {
+  const [full, shown] = splitTitle(el)
+  const caret = Object.assign(document.createElement('span'), { className: 'type-caret' })
+  caret.setAttribute('aria-hidden', 'true')
+  el.append(caret)
+  let i = 0
+  const tick = () => {
+    i += 1
+    shown.textContent = full.slice(0, i)
+    if (i < full.length) setTimeout(tick, 60)
+    else setTimeout(() => caret.remove(), 1500)
+  }
+  setTimeout(tick, 250)
+}
+
+const scrambleTitle = (el) => {
+  const [full, shown] = splitTitle(el)
+  const glyphs = '!<>-_/[]{}=+*^?#%&@0123456789'
+  const frames = 26
+  let frame = 0
+  const tick = () => {
+    const settled = Math.floor((frame / frames) * full.length)
+    shown.textContent = [...full]
+      .map((c, i) => (i < settled ? c : glyphs[Math.floor(Math.random() * glyphs.length)]))
+      .join('')
+    frame += 1
+    if (frame <= frames) setTimeout(tick, 45)
+  }
+  tick()
+}
+
+// --- Sections fade in as they scroll into view, and type their titles once.
+// Runs first: the sections start hidden, so an error further down must not keep them that way.
+const reveal = (section) => {
+  section.classList.add('is-visible')
+  if (!reducedMotion.matches) section.querySelectorAll('[data-type]').forEach(typeTitle)
+}
+const sections = document.querySelectorAll('.reveal')
+
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        observer.unobserve(entry.target)
+        reveal(entry.target)
+      }),
+    { rootMargin: '0px 0px -60px 0px', threshold: 0.1 }
+  )
+  sections.forEach((section) => observer.observe(section))
+} else {
+  sections.forEach(reveal)
+}
+
+if (!reducedMotion.matches) document.querySelectorAll('[data-scramble]').forEach(scrambleTitle)
+
 // --- Smooth scrolling (Lenis 1.3.26, MIT licence, copy in assets/vendor/lenis)
 // Only mouse-wheel and trackpad scrolling is smoothed. Touch screens keep native
 // scrolling, and visitors who ask for reduced motion never get Lenis at all.
@@ -146,119 +212,4 @@ if (canvas) {
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
   }
-}
-
-// --- Animated titles. Screen readers get the full text at once from a hidden copy.
-const splitTitle = (el) => {
-  const full = el.textContent.trim()
-  const hidden = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: full })
-  const shown = document.createElement('span')
-  shown.setAttribute('aria-hidden', 'true')
-  el.replaceChildren(hidden, shown)
-  return [full, shown]
-}
-
-const typeTitle = (el) => {
-  const [full, shown] = splitTitle(el)
-  const caret = Object.assign(document.createElement('span'), { className: 'type-caret' })
-  caret.setAttribute('aria-hidden', 'true')
-  el.append(caret)
-  let i = 0
-  const tick = () => {
-    i += 1
-    shown.textContent = full.slice(0, i)
-    if (i < full.length) setTimeout(tick, 60)
-    else setTimeout(() => caret.remove(), 1500)
-  }
-  setTimeout(tick, 250)
-}
-
-const scrambleTitle = (el) => {
-  const [full, shown] = splitTitle(el)
-  const glyphs = '!<>-_/[]{}=+*^?#%&@0123456789'
-  const frames = 26
-  let frame = 0
-  const tick = () => {
-    const settled = Math.floor((frame / frames) * full.length)
-    shown.textContent = [...full]
-      .map((c, i) => (i < settled ? c : glyphs[Math.floor(Math.random() * glyphs.length)]))
-      .join('')
-    frame += 1
-    if (frame <= frames) setTimeout(tick, 45)
-  }
-  tick()
-}
-
-if (!reducedMotion.matches) document.querySelectorAll('[data-scramble]').forEach(scrambleTitle)
-
-// --- Sections fade in as they scroll into view, and type their titles once.
-const reveal = (section) => {
-  section.classList.add('is-visible')
-  if (!reducedMotion.matches) section.querySelectorAll('[data-type]').forEach(typeTitle)
-}
-const sections = document.querySelectorAll('.reveal')
-
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return
-        observer.unobserve(entry.target)
-        reveal(entry.target)
-      }),
-    { rootMargin: '0px 0px -60px 0px', threshold: 0.1 }
-  )
-  sections.forEach((section) => observer.observe(section))
-} else {
-  sections.forEach(reveal)
-}
-
-// --- Contact form: send in the background and report the result on the page.
-// Without JavaScript the form still posts to Formspree normally.
-const contactForm = document.querySelector('[data-contact-form]')
-
-if (contactForm) {
-  const status = contactForm.querySelector('[data-contact-status]')
-  const submitBtn = contactForm.querySelector('button[type="submit"]')
-  const fallback = 'Please try again, or message me on LinkedIn.'
-
-  const setStatus = (message, state) => {
-    status.textContent = message
-    status.dataset.state = state
-  }
-
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault()
-
-    if (contactForm.action.includes('YOUR_FORM_ID')) {
-      setStatus("This form isn't connected yet, so your message wasn't sent. Please message me on LinkedIn.", 'error')
-      return
-    }
-
-    const label = submitBtn.textContent
-    submitBtn.disabled = true
-    submitBtn.textContent = 'Sending…'
-    setStatus('', '')
-
-    try {
-      const res = await fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: { Accept: 'application/json' },
-      })
-      if (res.ok) {
-        contactForm.reset()
-        setStatus('Thanks, your message was sent.', 'success')
-      } else {
-        const data = await res.json().catch(() => ({}))
-        const detail = Array.isArray(data.errors) ? data.errors.map((err) => err.message).join(' ') : ''
-        setStatus(`Your message wasn't sent${detail ? `: ${detail}` : '.'} ${fallback}`, 'error')
-      }
-    } catch {
-      setStatus(`Your message wasn't sent because the connection failed. ${fallback}`, 'error')
-    } finally {
-      submitBtn.disabled = false
-      submitBtn.textContent = label
-    }
-  })
 }

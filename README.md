@@ -10,18 +10,20 @@ Static HTML and SCSS, no framework. Open `index.html` in a browser to view it.
 npm install
 npm run watch:scss   # recompile css/style.css while editing
 npm run build        # compile, autoprefix and minify css/style.css
-npm run build:html   # regenerate the six pages from tools/build_pages.py
+npm run build:html   # regenerate the pages from tools/build_pages.py
 npm run build:font   # rebuild assets/fonts/kt-sans-latin-var.woff2 (needs: pip install fonttools brotli)
 ```
 
 Preview through a local server, for example `python -m http.server`, rather than opening the files directly: browsers block web fonts on `file://` pages.
 
-Page content, the shared header and footer, and the contact form live in `tools/build_pages.py`. Edit them there; the `.html` files are generated.
+Page content, the shared head and navigation, and the contact links live in `tools/build_pages.py`. Edit them there; the `.html` files are generated.
+
+The build writes six pages (home, projects and four case studies) and three small stand-ins that forward at once: `about.html` and `experience.html` send old links to the matching home-page section, and `resume.html` opens the résumé PDF.
 
 Settings in that file:
 
-- `FORMSPREE_ID`: your Formspree form ID, so the contact form can send messages.
-- Drop a résumé at `assets/Konstantin-Tovshtein-Resume.pdf` and rebuild to add "Download Résumé" buttons.
+- `EMAIL`: the address the Contact button opens in a new Gmail message. It is also shown as text for visitors who don't use Gmail.
+- `RESUME`: the résumé PDF, `assets/Konstantin-Tovshtein-Resume.pdf`. While the file exists, the build adds a Résumé nav link, an intro button and `resume.html`. Remember the PDF is public.
 - `SITE_URL`: the site's public address, used by the link-preview (`og:`) tags and canonical links. Change it if the site moves.
 
 When a page is shared on LinkedIn, Slack or iMessage, the preview shows `assets/png/share-card.png`. It is rendered from `tools/share-card.html`; the command to re-render it is at the top of that file.
