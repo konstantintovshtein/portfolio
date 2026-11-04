@@ -125,7 +125,8 @@ const canvas = document.querySelector('.page-bg__streaks')
 
 if (canvas) {
   const ctx = canvas.getContext('2d')
-  const colors = ['59,130,246', '96,165,250', '147,197,253']
+  // Electric Blue twice as often as its light tint or Cantaloupe, so orange stays a spark.
+  const colors = ['2,151,222', '2,151,222', '91,187,234', '252,115,77']
   const animated = document.body.classList.contains('page-home') && !reducedMotion.matches
   let w = 0
   let h = 0

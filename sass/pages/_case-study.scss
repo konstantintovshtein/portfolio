@@ -18,11 +18,11 @@
       @include type-small;
       display: inline-block;
       padding: 1rem 0;
-      color: var(--accent-mist);
+      color: var(--accent);
       transition: color var(--transition);
 
       &:hover {
-        color: var(--accent-light);
+        color: var(--accent-mist);
       }
     }
   }

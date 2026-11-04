@@ -92,7 +92,7 @@ def head(name, title, desc, cls):
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#05070c" />
+    <meta name="theme-color" content="#02070a" />
     <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content="{desc}" />

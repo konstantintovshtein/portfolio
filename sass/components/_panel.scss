@@ -29,8 +29,8 @@
   width: 2px;
   height: 1em;
   margin-left: 2px;
-  background: currentColor;
   vertical-align: text-bottom;
+  background: var(--warm);
   animation: caret-blink 1s step-end infinite;
 }
 

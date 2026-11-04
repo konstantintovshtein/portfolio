@@ -5,9 +5,9 @@
   justify-content: center;
   min-height: 4.4rem;
   padding: 1rem 2.6rem;
-  border: 1px solid rgb(var(--accent-rgb) / 0.6);
+  border: 1px solid transparent;
   border-radius: $radius-md;
-  background: var(--accent-btn);
+  background: var(--accent);
   color: var(--on-accent);
   transition: background-color var(--transition);
 
@@ -22,11 +22,11 @@
   font-weight: 500;
   display: inline-block;
   padding: 1.2rem 0;
-  color: var(--accent-mist);
+  color: var(--accent);
   transition: color var(--transition);
 
   &:hover {
-    color: var(--accent-light);
+    color: var(--accent-mist);
   }
 }
 
@@ -53,7 +53,7 @@
   &:hover {
     color: var(--text);
     border-color: rgb(var(--accent-rgb) / 0.45);
-    background: rgb(var(--accent-btn-rgb) / 0.14);
+    background: rgb(var(--accent-rgb) / 0.14);
   }
 
   &--icon {
@@ -89,8 +89,8 @@
   display: inline-block;
   padding: 0.3rem 0.8rem;
   border-radius: $radius-sm;
-  background: rgb(var(--accent-btn-rgb) / 0.28);
-  color: var(--accent-light);
+  background: rgb(var(--warm-rgb) / 0.16);
+  color: var(--warm);
 }
 
 .badge {

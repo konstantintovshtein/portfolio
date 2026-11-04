@@ -1,12 +1,14 @@
-// Fixed layer behind every page: a blue-black wash, with streaks drawn on the canvas by index.js.
+// Fixed layer behind every page: a Midnight wash lit blue from the top and warmed orange from the
+// bottom corner, with streaks drawn on the canvas by index.js.
 .page-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(90% 70% at 50% 0%, rgb(var(--accent-btn-rgb) / 0.12), transparent 65%),
-    linear-gradient(165deg, #04060b 0%, #0a1222 30%, #0c1528 50%, #0a1222 70%, #04060b 100%);
+    radial-gradient(90% 70% at 50% 0%, rgb(var(--accent-rgb) / 0.12), transparent 65%),
+    radial-gradient(70% 50% at 100% 100%, rgb(var(--warm-rgb) / 0.07), transparent 60%),
+    linear-gradient(165deg, #010407 0%, #04121b 30%, #061a26 50%, #04121b 70%, #010407 100%);
 
   &__streaks {
     display: block;

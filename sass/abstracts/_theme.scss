@@ -1,26 +1,28 @@
 // Dark theme tokens. Change colors here, not in components.
+// Palette: Midnight Black #02070A, Electric Blue #0297DE, Cantaloupe Orange #FC734D.
+// Electric Blue marks what you can press or follow; Cantaloupe marks what you should notice.
 :root {
   color-scheme: dark;
 
-  --bg: #05070c;
-  --surface-2: #161d2c; // used by tools/share-card.html
-  --border: #252d3d; // used by tools/share-card.html
+  --bg: #02070a;
+  --surface-2: #0b1821; // used by tools/share-card.html
+  --border: #1d2f3b; // used by tools/share-card.html
   --line: rgb(255 255 255 / 0.08);
-  --text: #f5f7fa;
-  --text-muted: #a3abb9;
-  --text-dim: #7c8597;
-  --accent: #3b82f6;
-  --accent-btn: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-mist: #93c5fd;
-  --accent-light: #dbeafe;
-  --on-accent: #ffffff;
+  --text: #f2f6f8;
+  --text-muted: #9faeb8;
+  --text-dim: #758794;
+  --accent: #0297de;
+  --accent-hover: #28a7e3;
+  --accent-mist: #5bbbea;
+  --warm: #fc734d;
+  // White fails on both accents (3.2:1 and 2.7:1), so filled surfaces carry Midnight text.
+  --on-accent: #02070a;
 
-  // Colour channels for translucent tints, e.g. rgb(var(--accent-btn-rgb) / 0.2)
-  --accent-rgb: 59 130 246;
-  --accent-btn-rgb: 37 99 235;
-  --glass-rgb: 18 24 38;
-  --bg-rgb: 5 7 12;
+  // Colour channels for translucent tints, e.g. rgb(var(--accent-rgb) / 0.2)
+  --accent-rgb: 2 151 222;
+  --warm-rgb: 252 115 77;
+  --glass-rgb: 12 24 32;
+  --bg-rgb: 2 7 10;
 
   // One family for everything; type roles live in abstracts/_type.scss.
   --font-sans: 'KT Sans', 'KT Sans Fallback', system-ui, sans-serif;
