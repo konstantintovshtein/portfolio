@@ -323,6 +323,29 @@ EDUCATION = [
     },
 ]
 
+# GitHub Foundations from the certificate itself (assets/png/github-foundations-certificate.png);
+# the other two as the Fall 2026 résumé lists them, with no dates or links known.
+CERTIFICATIONS = [
+    {
+        "mark": "GH",
+        "role": "GitHub Foundations",
+        "org": "GitHub, issued by Microsoft",
+        "when": "Sep 2026",
+        "meta": "Credential ID 565D157DBBB72603",
+        "links": [("View certificate", "./assets/png/github-foundations-certificate.png")],
+    },
+    {
+        "mark": "WSP",
+        "role": "Excel Crash Course",
+        "org": "Wall Street Prep",
+    },
+    {
+        "mark": "CS50",
+        "role": "CS50",
+        "org": "Harvard University",
+    },
+]
+
 CATEGORIES = [
     ("hackathons", "Hackathons"),
     ("work", "Work"),
@@ -432,7 +455,8 @@ def project_card(p):
 
 
 def entry(r):
-    points = "".join(f"\n              <li>{p}</li>" for p in r["points"])
+    points = "".join(f"\n              <li>{p}</li>" for p in r.get("points", []))
+    points_block = f'\n            <ul class="entry__points">{points}\n            </ul>' if points else ""
     meta = f'\n                <p class="entry__meta">{r["meta"]}</p>' if r.get("meta") else ""
     skills = (
         f'\n            <p class="entry__skills">{" &middot; ".join(r["tools"])}</p>' if r.get("tools") else ""
@@ -451,9 +475,7 @@ def entry(r):
                 <h3 class="entry__role">{r["role"]}</h3>
                 <p class="entry__org">{r["org"]}</p>{meta}
               </div>{when_block}
-            </div>
-            <ul class="entry__points">{points}
-            </ul>{skills}{links_block}
+            </div>{points_block}{skills}{links_block}
           </article>"""
 
 
@@ -510,6 +532,14 @@ education = section(
     "Education",
     f"""        <div class="entries">
 {chr(10).join(entry(r) for r in EDUCATION)}
+        </div>""",
+)
+
+certifications = section(
+    "certifications",
+    "Certifications",
+    f"""        <div class="entries">
+{chr(10).join(entry(r) for r in CERTIFICATIONS)}
         </div>""",
 )
 
@@ -574,7 +604,7 @@ page(
     "Portfolio of Konstantin Tovshtein, a BBA student at Simon Fraser University in Management Information Systems and Accounting, aiming for fintech and information systems.",
     "home",
     "page-home",
-    hero + intro + featured + experience + education + skills + beyond + contact,
+    hero + intro + featured + experience + education + certifications + skills + beyond + contact,
 )
 
 # About and Experience were folded into the home page; their old addresses forward there.
